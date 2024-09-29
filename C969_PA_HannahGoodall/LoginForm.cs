@@ -71,7 +71,9 @@ namespace C969_PA_HannahGoodall
             }
             if (match)
             {
-                //login
+                var customerForm = new CustomerRecordsForm(_connection);
+                this.Hide();
+                customerForm.ShowDialog();
             }
             else
             {
@@ -83,6 +85,14 @@ namespace C969_PA_HannahGoodall
                 {
                     MessageBox.Show("The username and password do not match.");
                 }
+            }
+        }
+
+        private void pwdTextbox_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                loginButton_Click(sender, e);
             }
         }
     }

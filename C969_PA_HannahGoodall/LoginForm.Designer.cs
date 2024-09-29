@@ -83,6 +83,7 @@
             this.pwdTextbox.Name = "pwdTextbox";
             this.pwdTextbox.Size = new System.Drawing.Size(187, 23);
             this.pwdTextbox.TabIndex = 4;
+            this.pwdTextbox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.pwdTextbox_KeyDown);
             // 
             // loginButton
             // 
