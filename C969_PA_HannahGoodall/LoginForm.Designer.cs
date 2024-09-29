@@ -35,6 +35,7 @@
             this.pwdTextbox = new System.Windows.Forms.TextBox();
             this.loginButton = new System.Windows.Forms.Button();
             this.cancelButton = new System.Windows.Forms.Button();
+            this.locationLabel = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // languageLabel
@@ -103,11 +104,21 @@
             this.cancelButton.UseVisualStyleBackColor = true;
             this.cancelButton.Click += new System.EventHandler(this.cancelButton_Click);
             // 
+            // locationLabel
+            // 
+            this.locationLabel.AutoSize = true;
+            this.locationLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
+            this.locationLabel.Location = new System.Drawing.Point(64, 414);
+            this.locationLabel.Name = "locationLabel";
+            this.locationLabel.Size = new System.Drawing.Size(0, 17);
+            this.locationLabel.TabIndex = 7;
+            // 
             // LoginForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(469, 450);
+            this.Controls.Add(this.locationLabel);
             this.Controls.Add(this.cancelButton);
             this.Controls.Add(this.loginButton);
             this.Controls.Add(this.pwdTextbox);
@@ -132,6 +143,7 @@
         private System.Windows.Forms.TextBox pwdTextbox;
         private System.Windows.Forms.Button loginButton;
         private System.Windows.Forms.Button cancelButton;
+        private System.Windows.Forms.Label locationLabel;
     }
 }
 

@@ -17,6 +17,7 @@ namespace C969_PA_HannahGoodall
         {
             InitializeComponent();
             _connection = connection;
+            locationLabel.Text = $"You are located in: {info.ToString()}";
             if(info.ToString().Contains("es"))
             {
                 languageLabel.Text = "Por favor ingrese su nombre de usuario y contraseña.";
@@ -74,7 +75,14 @@ namespace C969_PA_HannahGoodall
             }
             else
             {
-                MessageBox.Show("The username and password do not match.");
+                if (info.ToString().Contains("es"))
+                {
+                    MessageBox.Show("El nombre de usuario y la contraseña no coinciden");
+                }
+                else
+                {
+                    MessageBox.Show("The username and password do not match.");
+                }
             }
         }
     }
