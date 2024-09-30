@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.utcCustomerDataGrid = new System.Windows.Forms.DataGridView();
+            this.customerDataGrid = new System.Windows.Forms.DataGridView();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
@@ -39,21 +39,22 @@
             this.updateApptButton = new System.Windows.Forms.Button();
             this.addApptButton = new System.Windows.Forms.Button();
             this.closeButton = new System.Windows.Forms.Button();
-            ((System.ComponentModel.ISupportInitialize)(this.utcCustomerDataGrid)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.customerDataGrid)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
-            // utcCustomerDataGrid
+            // customerDataGrid
             // 
-            this.utcCustomerDataGrid.AllowUserToAddRows = false;
-            this.utcCustomerDataGrid.AllowUserToDeleteRows = false;
-            this.utcCustomerDataGrid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.utcCustomerDataGrid.Location = new System.Drawing.Point(41, 52);
-            this.utcCustomerDataGrid.Name = "utcCustomerDataGrid";
-            this.utcCustomerDataGrid.ReadOnly = true;
-            this.utcCustomerDataGrid.RowHeadersVisible = false;
-            this.utcCustomerDataGrid.Size = new System.Drawing.Size(319, 284);
-            this.utcCustomerDataGrid.TabIndex = 1;
+            this.customerDataGrid.AllowUserToAddRows = false;
+            this.customerDataGrid.AllowUserToDeleteRows = false;
+            this.customerDataGrid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.customerDataGrid.Location = new System.Drawing.Point(41, 52);
+            this.customerDataGrid.Name = "customerDataGrid";
+            this.customerDataGrid.ReadOnly = true;
+            this.customerDataGrid.RowHeadersVisible = false;
+            this.customerDataGrid.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.customerDataGrid.Size = new System.Drawing.Size(319, 284);
+            this.customerDataGrid.TabIndex = 1;
             // 
             // dataGridView1
             // 
@@ -103,6 +104,7 @@
             this.updateCustomerButton.TabIndex = 6;
             this.updateCustomerButton.Text = "Update";
             this.updateCustomerButton.UseVisualStyleBackColor = true;
+            this.updateCustomerButton.Click += new System.EventHandler(this.updateCustomerButton_Click);
             // 
             // deleteCustomerButton
             // 
@@ -170,11 +172,11 @@
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.dataGridView1);
-            this.Controls.Add(this.utcCustomerDataGrid);
+            this.Controls.Add(this.customerDataGrid);
             this.Name = "CustomerRecordsForm";
             this.Text = "Customer Records";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.CustomerRecordsForm_FormClosed);
-            ((System.ComponentModel.ISupportInitialize)(this.utcCustomerDataGrid)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.customerDataGrid)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -182,7 +184,7 @@
         }
 
         #endregion
-        private System.Windows.Forms.DataGridView utcCustomerDataGrid;
+        private System.Windows.Forms.DataGridView customerDataGrid;
         private System.Windows.Forms.DataGridView dataGridView1;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;

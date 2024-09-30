@@ -21,14 +21,6 @@ namespace C969_PA_HannahGoodall
             _connection = connection;
             _user = user;
 
-            utcCustomerDataGrid.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            utcCustomerDataGrid.DefaultCellStyle.SelectionBackColor = utcCustomerDataGrid.DefaultCellStyle.BackColor;
-            utcCustomerDataGrid.DefaultCellStyle.SelectionForeColor = utcCustomerDataGrid.DefaultCellStyle.ForeColor;
-
-            utcCustomerDataGrid.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            utcCustomerDataGrid.DefaultCellStyle.SelectionBackColor = utcCustomerDataGrid.DefaultCellStyle.BackColor;
-            utcCustomerDataGrid.DefaultCellStyle.SelectionForeColor = utcCustomerDataGrid.DefaultCellStyle.ForeColor;
-
             InitializeDataGrid();
 
         }
@@ -41,7 +33,7 @@ namespace C969_PA_HannahGoodall
             DataTable dt = new DataTable();
             adapter.Fill(dt);
 
-            utcCustomerDataGrid.DataSource = dt;
+            customerDataGrid.DataSource = dt;
         }
         private void closeButton_Click(object sender, EventArgs e)
         {
@@ -55,9 +47,39 @@ namespace C969_PA_HannahGoodall
 
         private void addCustomerButton_Click(object sender, EventArgs e)
         {
-            var addCustomerForm = new addUpdateCustomerForm(_connection, true, _user, this);
+            var addCustomerForm = new addUpdateCustomerForm(_connection, _user, this);
             addCustomerForm.Text = "Add Customer";
             addCustomerForm.ShowDialog();
+        }
+
+        private void updateCustomerButton_Click(object sender, EventArgs e)
+        {
+            if (customerDataGrid.SelectedRows.Count > 0)
+            {
+                string customerId = "";
+                for(int i = 0; i < customerDataGrid.SelectedRows.Count; i++)
+                {
+                    string name = customerDataGrid.SelectedRows[i].Cells[0].Value.ToString();
+
+                    //find customerID
+                    string sqlString = $"SELECT customerId FROM customer WHERE customerName = '{name}'";
+                    MySqlCommand cmd = new MySqlCommand(sqlString, _connection);
+                    MySqlDataAdapter adp = new MySqlDataAdapter(cmd);
+                    DataTable dt = new DataTable();
+                    adp.Fill(dt);
+                    for(int j = 0; j < dt.Rows.Count; j++)
+                    {
+                        customerId = dt.Rows[j]["customerId"].ToString();
+                    }
+                }
+                var addCustomerForm = new addUpdateCustomerForm(_connection, _user, this, customerId);
+                addCustomerForm.Text = "Update Customer";
+                addCustomerForm.ShowDialog();
+            }
+            else
+            {
+                MessageBox.Show("Must select a customer to update.");
+            }
         }
     }
 }
