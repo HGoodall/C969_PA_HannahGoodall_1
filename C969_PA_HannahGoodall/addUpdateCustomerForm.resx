@@ -195,7 +195,7 @@
     <value>144, 20</value>
   </data>
   <data name="phoneTextbox.TabIndex" type="System.Int32, mscorlib">
-    <value>5</value>
+    <value>9</value>
   </data>
   <data name="&gt;&gt;phoneTextbox.Name" xml:space="preserve">
     <value>phoneTextbox</value>
@@ -253,7 +253,7 @@
     <value>41, 13</value>
   </data>
   <data name="label3.TabIndex" type="System.Int32, mscorlib">
-    <value>7</value>
+    <value>8</value>
   </data>
   <data name="label3.Text" xml:space="preserve">
     <value>Phone:</value>
@@ -277,7 +277,7 @@
     <value>75, 23</value>
   </data>
   <data name="saveCusButton.TabIndex" type="System.Int32, mscorlib">
-    <value>8</value>
+    <value>10</value>
   </data>
   <data name="saveCusButton.Text" xml:space="preserve">
     <value>Save</value>
@@ -301,7 +301,7 @@
     <value>75, 23</value>
   </data>
   <data name="cancelButton.TabIndex" type="System.Int32, mscorlib">
-    <value>9</value>
+    <value>11</value>
   </data>
   <data name="cancelButton.Text" xml:space="preserve">
     <value>Cancel</value>
@@ -331,7 +331,7 @@
     <value>27, 13</value>
   </data>
   <data name="label2.TabIndex" type="System.Int32, mscorlib">
-    <value>10</value>
+    <value>4</value>
   </data>
   <data name="label2.Text" xml:space="preserve">
     <value>City:</value>
@@ -361,7 +361,7 @@
     <value>46, 13</value>
   </data>
   <data name="label5.TabIndex" type="System.Int32, mscorlib">
-    <value>11</value>
+    <value>6</value>
   </data>
   <data name="label5.Text" xml:space="preserve">
     <value>Country:</value>
@@ -385,7 +385,7 @@
     <value>144, 20</value>
   </data>
   <data name="cityTextbox.TabIndex" type="System.Int32, mscorlib">
-    <value>12</value>
+    <value>5</value>
   </data>
   <data name="&gt;&gt;cityTextbox.Name" xml:space="preserve">
     <value>cityTextbox</value>
@@ -406,7 +406,7 @@
     <value>144, 20</value>
   </data>
   <data name="countryTextbox.TabIndex" type="System.Int32, mscorlib">
-    <value>13</value>
+    <value>7</value>
   </data>
   <data name="&gt;&gt;countryTextbox.Name" xml:space="preserve">
     <value>countryTextbox</value>
@@ -420,6 +420,21 @@
   <data name="&gt;&gt;countryTextbox.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
+  <metadata name="nameToolTip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>17, 17</value>
+  </metadata>
+  <metadata name="addressToolTip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>139, 17</value>
+  </metadata>
+  <metadata name="cityToolTip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>262, 20</value>
+  </metadata>
+  <metadata name="countryToolTip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>369, 24</value>
+  </metadata>
+  <metadata name="phoneToolTip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>502, 24</value>
+  </metadata>
   <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
@@ -431,6 +446,36 @@
   </data>
   <data name="$this.Text" xml:space="preserve">
     <value>addUpdateCustomerForm</value>
+  </data>
+  <data name="&gt;&gt;nameToolTip.Name" xml:space="preserve">
+    <value>nameToolTip</value>
+  </data>
+  <data name="&gt;&gt;nameToolTip.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolTip, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;addressToolTip.Name" xml:space="preserve">
+    <value>addressToolTip</value>
+  </data>
+  <data name="&gt;&gt;addressToolTip.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolTip, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;cityToolTip.Name" xml:space="preserve">
+    <value>cityToolTip</value>
+  </data>
+  <data name="&gt;&gt;cityToolTip.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolTip, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;countryToolTip.Name" xml:space="preserve">
+    <value>countryToolTip</value>
+  </data>
+  <data name="&gt;&gt;countryToolTip.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolTip, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;phoneToolTip.Name" xml:space="preserve">
+    <value>phoneToolTip</value>
+  </data>
+  <data name="&gt;&gt;phoneToolTip.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolTip, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;$this.Name" xml:space="preserve">
     <value>addUpdateCustomerForm</value>

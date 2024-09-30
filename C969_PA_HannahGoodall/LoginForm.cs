@@ -71,7 +71,7 @@ namespace C969_PA_HannahGoodall
             }
             if (match)
             {
-                var customerForm = new CustomerRecordsForm(_connection);
+                var customerForm = new CustomerRecordsForm(_connection, username);
                 this.Hide();
                 customerForm.ShowDialog();
             }

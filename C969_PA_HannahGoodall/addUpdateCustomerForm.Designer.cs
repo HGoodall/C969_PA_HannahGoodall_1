@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(addUpdateCustomerForm));
             this.label1 = new System.Windows.Forms.Label();
             this.nameTextbox = new System.Windows.Forms.TextBox();
@@ -41,6 +42,11 @@
             this.label5 = new System.Windows.Forms.Label();
             this.cityTextbox = new System.Windows.Forms.TextBox();
             this.countryTextbox = new System.Windows.Forms.TextBox();
+            this.nameToolTip = new System.Windows.Forms.ToolTip(this.components);
+            this.addressToolTip = new System.Windows.Forms.ToolTip(this.components);
+            this.cityToolTip = new System.Windows.Forms.ToolTip(this.components);
+            this.countryToolTip = new System.Windows.Forms.ToolTip(this.components);
+            this.phoneToolTip = new System.Windows.Forms.ToolTip(this.components);
             this.SuspendLayout();
             // 
             // label1
@@ -52,16 +58,19 @@
             // 
             resources.ApplyResources(this.nameTextbox, "nameTextbox");
             this.nameTextbox.Name = "nameTextbox";
+            this.nameTextbox.TextChanged += new System.EventHandler(this.nameTextbox_TextChanged);
             // 
             // addressTextbox
             // 
             resources.ApplyResources(this.addressTextbox, "addressTextbox");
             this.addressTextbox.Name = "addressTextbox";
+            this.addressTextbox.TextChanged += new System.EventHandler(this.addressTextbox_TextChanged);
             // 
             // phoneTextbox
             // 
             resources.ApplyResources(this.phoneTextbox, "phoneTextbox");
             this.phoneTextbox.Name = "phoneTextbox";
+            this.phoneTextbox.TextChanged += new System.EventHandler(this.phoneTextbox_TextChanged);
             // 
             // label4
             // 
@@ -101,11 +110,13 @@
             // 
             resources.ApplyResources(this.cityTextbox, "cityTextbox");
             this.cityTextbox.Name = "cityTextbox";
+            this.cityTextbox.TextChanged += new System.EventHandler(this.cityTextbox_TextChanged);
             // 
             // countryTextbox
             // 
             resources.ApplyResources(this.countryTextbox, "countryTextbox");
             this.countryTextbox.Name = "countryTextbox";
+            this.countryTextbox.TextChanged += new System.EventHandler(this.countryTextbox_TextChanged);
             // 
             // addUpdateCustomerForm
             // 
@@ -143,5 +154,10 @@
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.TextBox cityTextbox;
         private System.Windows.Forms.TextBox countryTextbox;
+        private System.Windows.Forms.ToolTip nameToolTip;
+        private System.Windows.Forms.ToolTip addressToolTip;
+        private System.Windows.Forms.ToolTip cityToolTip;
+        private System.Windows.Forms.ToolTip countryToolTip;
+        private System.Windows.Forms.ToolTip phoneToolTip;
     }
 }
