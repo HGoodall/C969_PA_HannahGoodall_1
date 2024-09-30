@@ -10,6 +10,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Xml.Linq;
 
 namespace C969_PA_HannahGoodall
 {
@@ -36,17 +37,57 @@ namespace C969_PA_HannahGoodall
         {
             this.Close();
         }
+        private string name = "";
+        private string address = "";
+        private string city = "";
+        private string country = "";
+        private string phone = "";
+        private string cityId = "";
+        private string countryId = "";
+        private string addressId = "";
         private void setCustomer()
         {
-            string findCustomerSqlString = $"SELECT * FROM customer WHERE customerId = {_customerId}";
+            string findCustomerSqlString = $"SELECT * FROM customer WHERE customerId = {_customerId};";
             MySqlCommand findCustomerCmd = new MySqlCommand(findCustomerSqlString, _connection);
-            MySqlDataAdapter adp = new MySqlDataAdapter(findCustomerCmd);
+            MySqlDataAdapter findCusAdp = new MySqlDataAdapter(findCustomerCmd);
             DataTable dt = new DataTable();
-            adp.Fill(dt);
-            for (int i = 0; i < dt.Rows.Count; i++)
-            {
-                nameTextbox.Text = dt.Rows[i]["customerName"].ToString();
-            }
+            findCusAdp.Fill(dt);
+
+            nameTextbox.Text = dt.Rows[0]["customerName"].ToString();
+            name = nameTextbox.Text;
+            addressId = dt.Rows[0]["addressId"].ToString();
+
+            string findAddressSqlString = $"SELECT * FROM address WHERE addressId = {addressId};";
+            MySqlCommand findAddressCmd = new MySqlCommand(findAddressSqlString, _connection);
+            MySqlDataAdapter findAddressAdp = new MySqlDataAdapter(findAddressCmd);
+            DataTable dt1 = new DataTable();
+            findAddressAdp.Fill(dt1);
+
+            addressTextbox.Text = dt1.Rows[0]["address"].ToString();
+            address = addressTextbox.Text;
+            phoneTextbox.Text = dt1.Rows[0]["phone"].ToString();
+            phone = phoneTextbox.Text;
+            cityId = dt1.Rows[0]["cityId"].ToString();
+
+            string findCitySqlString = $"SELECT * FROM city WHERE cityId = {cityId};";
+            MySqlCommand findCityCmd = new MySqlCommand(findCitySqlString, _connection);
+            MySqlDataAdapter findCityAdp = new MySqlDataAdapter(findCityCmd);
+            DataTable dt2 = new DataTable();
+            findCityAdp.Fill(dt2);
+
+            cityTextbox.Text = dt2.Rows[0]["city"].ToString();
+            city = cityTextbox.Text;
+            countryId = dt2.Rows[0]["countryId"].ToString();
+
+            string findCountrySqlString = $"SELECT * FROM country WHERE countryId = {countryId};";
+            MySqlCommand findCountryCmd = new MySqlCommand(findCountrySqlString, _connection);
+            MySqlDataAdapter findCountryAdp = new MySqlDataAdapter(findCountryCmd);
+            DataTable dt3 = new DataTable();
+            findCountryAdp.Fill(dt3);
+
+            countryTextbox.Text = dt3.Rows[0]["country"].ToString();
+            country = countryTextbox.Text;
+
         }
         private void saveCusButton_Click(object sender, EventArgs e)
         {
@@ -132,13 +173,96 @@ namespace C969_PA_HannahGoodall
                     MySqlDataReader customerReader;
                     customerReader = customerInsertCmd.ExecuteReader();
                     _connection.Close();
-                    parent.InitializeDataGrid();
-                    this.Close();
                 }
                 else
                 {
-
+                    if (nameTextbox.Text != name)
+                    {
+                        if(_connection.State == ConnectionState.Closed)
+                        {
+                            _connection.Open();
+                        }
+                        string updateNameSqlString = $"UPDATE customer SET customerName = '{nameTextbox.Text}' WHERE customerId = {_customerId};";
+                        MySqlCommand nameUpdateCmd = new MySqlCommand(updateNameSqlString, _connection);
+                        MySqlDataReader nameReader;
+                        nameReader = nameUpdateCmd.ExecuteReader();
+                        _connection.Close();
+                    }
+                    if (addressTextbox.Text != address)
+                    {
+                        if (_connection.State == ConnectionState.Closed)
+                        {
+                            _connection.Open();
+                        }
+                        string updateAddressSqlString = $"UPDATE address SET address = '{addressTextbox.Text}' WHERE addressId = {addressId};";
+                        MySqlCommand addressUpdateCmd = new MySqlCommand(updateAddressSqlString, _connection);
+                        MySqlDataReader addressReader;
+                        addressReader = addressUpdateCmd.ExecuteReader();
+                        _connection.Close();
+                    }
+                    if (cityTextbox.Text != city)
+                    {
+                        var existingCity = GetCityId();
+                        if (_connection.State == ConnectionState.Closed)
+                        {
+                            _connection.Open();
+                        }
+                        if (!string.IsNullOrEmpty(existingCity))
+                        {
+                            string existingCitySqlString = $"UPDATE address SET cityId = '{existingCity}' WHERE addressId = {addressId};";
+                            MySqlCommand cityUpdateCmd = new MySqlCommand(existingCitySqlString, _connection);
+                            MySqlDataReader cityReader;
+                            cityReader = cityUpdateCmd.ExecuteReader();
+                            _connection.Close();
+                        }
+                        else
+                        {
+                            string updateCitySqlString = $"UPDATE city SET city = '{cityTextbox.Text}' WHERE cityId = {cityId};";
+                            MySqlCommand cityUpdateCmd = new MySqlCommand(updateCitySqlString, _connection);
+                            MySqlDataReader cityReader;
+                            cityReader = cityUpdateCmd.ExecuteReader();
+                            _connection.Close();
+                        }
+                    }
+                    if (countryTextbox.Text != country)
+                    {
+                        var existingCountry = GetCountryId();
+                        if (_connection.State == ConnectionState.Closed)
+                        {
+                            _connection.Open();
+                        }
+                        if (!string.IsNullOrEmpty(existingCountry))
+                        {
+                            string existingCountrySqlString = $"UPDATE city SET countryId = '{existingCountry}' WHERE cityId = {cityId};";
+                            MySqlCommand countryUpdateCmd = new MySqlCommand(existingCountrySqlString, _connection);
+                            MySqlDataReader countryReader;
+                            countryReader = countryUpdateCmd.ExecuteReader();
+                            _connection.Close();
+                        }
+                        else
+                        { 
+                            string updateCountrySqlString = $"UPDATE country SET country = '{countryTextbox.Text}' WHERE countryId = {countryId};";
+                            MySqlCommand countryUpdateCmd = new MySqlCommand(updateCountrySqlString, _connection);
+                            MySqlDataReader countryReader;
+                            countryReader = countryUpdateCmd.ExecuteReader();
+                            _connection.Close();
+                        }
+                    }
+                    if (phoneTextbox.Text != phone)
+                    {
+                        if (_connection.State == ConnectionState.Closed)
+                        {
+                            _connection.Open();
+                        }
+                        string updatePhoneSqlString = $"UPDATE address SET phone = '{phoneTextbox.Text}' WHERE addressId = {addressId};";
+                        MySqlCommand phoneUpdateCmd = new MySqlCommand(updatePhoneSqlString, _connection);
+                        MySqlDataReader phoneReader;
+                        phoneReader = phoneUpdateCmd.ExecuteReader();
+                        _connection.Close();
+                    }
                 }
+                parent.InitializeDataGrid();
+                this.Close();
             }
         }
         private string GetCountryId()
