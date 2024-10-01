@@ -45,6 +45,7 @@ namespace C969_PA_HannahGoodall
         private string cityId = "";
         private string countryId = "";
         private string addressId = "";
+        var createDate = DateTime.Now.ToString("yyyy-MM-dd");
         private void setCustomer()
         {
             string findCustomerSqlString = $"SELECT * FROM customer WHERE customerId = {_customerId};";
@@ -96,7 +97,7 @@ namespace C969_PA_HannahGoodall
                 if (string.IsNullOrEmpty(_customerId))
                 {
                     //insert customer to the DB
-                    var createDate = DateTime.Now.ToString("yyyy-MM-dd");
+
                     //insert country
                     string countryId = GetCountryId();
                     _connection.Close();
@@ -178,7 +179,7 @@ namespace C969_PA_HannahGoodall
                 {
                     if (nameTextbox.Text != name)
                     {
-                        if(_connection.State == ConnectionState.Closed)
+                        if (_connection.State == ConnectionState.Closed)
                         {
                             _connection.Open();
                         }
@@ -202,51 +203,95 @@ namespace C969_PA_HannahGoodall
                     }
                     if (cityTextbox.Text != city)
                     {
-                        var existingCity = GetCityId();
-                        if (_connection.State == ConnectionState.Closed)
+                        try
                         {
-                            _connection.Open();
+
+                            var existingCity = GetCityId();
+                            if (_connection.State == ConnectionState.Closed)
+                            {
+                                _connection.Open();
+                            }
+                            if (!string.IsNullOrEmpty(existingCity))
+                            {
+                                string existingCitySqlString = $"UPDATE address SET cityId = '{existingCity}' WHERE addressId = {addressId};";
+                                MySqlCommand cityUpdateCmd = new MySqlCommand(existingCitySqlString, _connection);
+                                MySqlDataReader cityReader;
+                                cityReader = cityUpdateCmd.ExecuteReader();
+                                _connection.Close();
+                            }
+                            else
+                            {
+                                if (_connection.State == ConnectionState.Closed)
+                                {
+                                    _connection.Open();
+                                }
+                                //insert new city and then update address with new cityID
+                                string cityInsertSqlString = $"INSERT INTO city (city, countryId, createDate, createdBy, lastUpdateBy) VALUES ('{cityTextbox.Text}', '{countryId}', '{createDate}', '{_user}', '{_user}');";
+                                MySqlCommand cityInsertCmd = new MySqlCommand(cityInsertSqlString, _connection);
+                                MySqlDataReader cityReader;
+                                cityReader = cityInsertCmd.ExecuteReader();
+                                _connection.Close();
+
+                                cityId = GetCityId();
+                                if (_connection.State == ConnectionState.Closed)
+                                {
+                                    _connection.Open();
+                                }
+                                string updateCitySqlString = $"UPDATE address SET cityId = '{cityId}' WHERE addressId = {addressId};";
+                                MySqlCommand cityUpdateCmd = new MySqlCommand(updateCitySqlString, _connection);
+                                MySqlDataReader cityUpdateReader;
+                                cityUpdateReader = cityUpdateCmd.ExecuteReader();
+                                _connection.Close();
+                            }
                         }
-                        if (!string.IsNullOrEmpty(existingCity))
+                        catch (Exception ex)
                         {
-                            string existingCitySqlString = $"UPDATE address SET cityId = '{existingCity}' WHERE addressId = {addressId};";
-                            MySqlCommand cityUpdateCmd = new MySqlCommand(existingCitySqlString, _connection);
-                            MySqlDataReader cityReader;
-                            cityReader = cityUpdateCmd.ExecuteReader();
-                            _connection.Close();
-                        }
-                        else
-                        {
-                            string updateCitySqlString = $"UPDATE city SET city = '{cityTextbox.Text}' WHERE cityId = {cityId};";
-                            MySqlCommand cityUpdateCmd = new MySqlCommand(updateCitySqlString, _connection);
-                            MySqlDataReader cityReader;
-                            cityReader = cityUpdateCmd.ExecuteReader();
-                            _connection.Close();
+                            throw new Exception(ex.Message, ex);
                         }
                     }
+
                     if (countryTextbox.Text != country)
                     {
-                        var existingCountry = GetCountryId();
-                        if (_connection.State == ConnectionState.Closed)
+                        try
                         {
-                            _connection.Open();
+                            var existingCountry = GetCountryId();
+
+                            if (_connection.State == ConnectionState.Closed)
+                            {
+                                _connection.Open();
+                            }
+                            if (!string.IsNullOrEmpty(existingCountry))
+                            {
+                                string existingCountrySqlString = $"UPDATE city SET countryId = '{existingCountry}' WHERE cityId = {cityId};";
+                                MySqlCommand countryUpdateCmd = new MySqlCommand(existingCountrySqlString, _connection);
+                                MySqlDataReader countryReader;
+                                countryReader = countryUpdateCmd.ExecuteReader();
+                                _connection.Close();
+                            }
+                            else
+                            {
+                                if (_connection.State == ConnectionState.Closed)
+                                {
+                                    _connection.Open();
+                                }
+                                string countryInsertSqlString = $"INSERT INTO country (country, createDate, createdBy, lastUpdateBy) VALUES ('{countryTextbox.Text}', '{createDate}', '{_user}', '{_user}');";
+                                MySqlCommand countryInsertCmd = new MySqlCommand(countryInsertSqlString, _connection);
+                                MySqlDataReader countryReader;
+                                countryReader = countryInsertCmd.ExecuteReader();
+                                _connection.Close();
+                                countryId = GetCountryId();
+                                if (_connection.State == ConnectionState.Closed)
+                                {
+                                    _connection.Open();
+                                }
+                                string updateCountrySqlString = $"UPDATE city SET countryId = '{countryId}' WHERE cityId = {cityId};";
+                                MySqlCommand countryUpdateCmd = new MySqlCommand(updateCountrySqlString, _connection);
+                                MySqlDataReader countryUpdateReader;
+                                countryUpdateReader = countryUpdateCmd.ExecuteReader();
+                                _connection.Close();
+                            }
                         }
-                        if (!string.IsNullOrEmpty(existingCountry))
-                        {
-                            string existingCountrySqlString = $"UPDATE city SET countryId = '{existingCountry}' WHERE cityId = {cityId};";
-                            MySqlCommand countryUpdateCmd = new MySqlCommand(existingCountrySqlString, _connection);
-                            MySqlDataReader countryReader;
-                            countryReader = countryUpdateCmd.ExecuteReader();
-                            _connection.Close();
-                        }
-                        else
-                        { 
-                            string updateCountrySqlString = $"UPDATE country SET country = '{countryTextbox.Text}' WHERE countryId = {countryId};";
-                            MySqlCommand countryUpdateCmd = new MySqlCommand(updateCountrySqlString, _connection);
-                            MySqlDataReader countryReader;
-                            countryReader = countryUpdateCmd.ExecuteReader();
-                            _connection.Close();
-                        }
+                        
                     }
                     if (phoneTextbox.Text != phone)
                     {
@@ -261,6 +306,7 @@ namespace C969_PA_HannahGoodall
                         _connection.Close();
                     }
                 }
+
                 parent.InitializeDataGrid();
                 this.Close();
             }
