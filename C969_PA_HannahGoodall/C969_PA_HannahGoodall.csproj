@@ -98,17 +98,23 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="addUpdateCustomerForm.cs">
+    <Compile Include="AddUpdateAppointmentForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="addUpdateCustomerForm.Designer.cs">
-      <DependentUpon>addUpdateCustomerForm.cs</DependentUpon>
+    <Compile Include="AddUpdateAppointmentForm.Designer.cs">
+      <DependentUpon>AddUpdateAppointmentForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="CustomerRecordsForm.cs">
+    <Compile Include="AddUpdateCustomerForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="CustomerRecordsForm.Designer.cs">
-      <DependentUpon>CustomerRecordsForm.cs</DependentUpon>
+    <Compile Include="AddUpdateCustomerForm.Designer.cs">
+      <DependentUpon>AddUpdateCustomerForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="RecordsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="RecordsForm.Designer.cs">
+      <DependentUpon>RecordsForm.cs</DependentUpon>
     </Compile>
     <Compile Include="LoginForm.cs">
       <SubType>Form</SubType>
@@ -118,14 +124,17 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="addUpdateCustomerForm.aa.resx">
-      <DependentUpon>addUpdateCustomerForm.cs</DependentUpon>
+    <EmbeddedResource Include="AddUpdateAppointmentForm.resx">
+      <DependentUpon>AddUpdateAppointmentForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="addUpdateCustomerForm.resx">
-      <DependentUpon>addUpdateCustomerForm.cs</DependentUpon>
+    <EmbeddedResource Include="AddUpdateCustomerForm.aa.resx">
+      <DependentUpon>AddUpdateCustomerForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="CustomerRecordsForm.resx">
-      <DependentUpon>CustomerRecordsForm.cs</DependentUpon>
+    <EmbeddedResource Include="AddUpdateCustomerForm.resx">
+      <DependentUpon>AddUpdateCustomerForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="RecordsForm.resx">
+      <DependentUpon>RecordsForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="LoginForm.resx">
       <DependentUpon>LoginForm.cs</DependentUpon>

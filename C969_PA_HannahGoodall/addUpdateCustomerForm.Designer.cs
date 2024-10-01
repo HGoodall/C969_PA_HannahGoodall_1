@@ -1,6 +1,6 @@
 ﻿namespace C969_PA_HannahGoodall
 {
-    partial class addUpdateCustomerForm
+    partial class AddUpdateCustomerForm
     {
         /// <summary>
         /// Required designer variable.
@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(addUpdateCustomerForm));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AddUpdateCustomerForm));
             this.label1 = new System.Windows.Forms.Label();
             this.nameTextbox = new System.Windows.Forms.TextBox();
             this.addressTextbox = new System.Windows.Forms.TextBox();

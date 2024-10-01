@@ -1,32 +1,38 @@
 ﻿using MySql.Data.MySqlClient;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
-using System.Data.SqlTypes;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace C969_PA_HannahGoodall
 {
-    public partial class CustomerRecordsForm : Form
+    public partial class RecordsForm : Form
     {
         private MySqlConnection _connection;
         private string _user;
-        public CustomerRecordsForm(MySqlConnection connection, string user)
+        public RecordsForm(MySqlConnection connection, string user)
         {
             InitializeComponent();
             _connection = connection;
             _user = user;
 
-            InitializeDataGrid();
+            InitializeCustomerDataGrid();
+            InitializeAppointmentDataGrid();
 
         }
-        public void InitializeDataGrid()
+        public void InitializeAppointmentDataGrid()
         {
+            string sqlString = "use client_schedule; SELECT type, customer.customerName, CONCAT(cast(start as time), ' - ', cast(end as time)) AS scheduleTime FROM appointment, customer WHERE appointment.customerId = customer.customerId;";
+            MySqlCommand cmd = new MySqlCommand(sqlString, _connection);
+            MySqlDataAdapter adapter = new MySqlDataAdapter(cmd);
+
+            DataTable dt = new DataTable();
+            adapter.Fill(dt);
+
+            appointmentDataGrid.DataSource = dt;
+        }
+        public void InitializeCustomerDataGrid()
+        {
+            
             string sqlString = "use client_schedule; SELECT customerName, address, phone FROM customer, address WHERE customer.addressId = address.addressId;";
             MySqlCommand cmd = new MySqlCommand(sqlString, _connection);
             MySqlDataAdapter adapter = new MySqlDataAdapter(cmd);
@@ -48,7 +54,7 @@ namespace C969_PA_HannahGoodall
 
         private void addCustomerButton_Click(object sender, EventArgs e)
         {
-            var addCustomerForm = new addUpdateCustomerForm(_connection, _user, this);
+            var addCustomerForm = new AddUpdateCustomerForm(_connection, _user, this);
             addCustomerForm.Text = "Add Customer";
             addCustomerForm.ShowDialog();
         }
@@ -58,7 +64,7 @@ namespace C969_PA_HannahGoodall
             if (customerDataGrid.SelectedRows.Count > 0)
             {
                 string customerId = GetSelectedCustomerId();
-                var addCustomerForm = new addUpdateCustomerForm(_connection, _user, this, customerId);
+                var addCustomerForm = new AddUpdateCustomerForm(_connection, _user, this, customerId);
                 addCustomerForm.Text = "Update Customer";
                 addCustomerForm.ShowDialog();
             }
@@ -80,7 +86,7 @@ namespace C969_PA_HannahGoodall
                     {
                         _connection.Open();
                     }
-                    string deleteCustomerSqlString = $"DELETE FROM customer WHERE customerId = '{customerId}'";
+                    string deleteCustomerSqlString = $"DELETE FROM customer WHERE customerId = '{customerId}';";
                     MySqlCommand cmd = new MySqlCommand(deleteCustomerSqlString, _connection);
                     MySqlDataReader reader;
                     reader = cmd.ExecuteReader();
@@ -103,7 +109,7 @@ namespace C969_PA_HannahGoodall
                     string name = customerDataGrid.SelectedRows[i].Cells[0].Value.ToString();
 
                     //find customerID
-                    string sqlString = $"SELECT customerId FROM customer WHERE customerName = '{name}'";
+                    string sqlString = $"SELECT customerId FROM customer WHERE customerName = '{name}';";
                     MySqlCommand cmd = new MySqlCommand(sqlString, _connection);
                     MySqlDataAdapter adp = new MySqlDataAdapter(cmd);
                     DataTable dt = new DataTable();
@@ -119,6 +125,23 @@ namespace C969_PA_HannahGoodall
             {
                 throw new Exception(ex.Message, ex);
             }
+        }
+
+        private void deleteApptButton_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void updateApptButton_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void addApptButton_Click(object sender, EventArgs e)
+        {
+            var form = new AddUpdateAppointmentForm(_connection);
+            form.Text = "Add Appointment";
+            form.ShowDialog();
         }
     }
 }

@@ -14,13 +14,13 @@ using System.Xml.Linq;
 
 namespace C969_PA_HannahGoodall
 {
-    public partial class addUpdateCustomerForm : Form
+    public partial class AddUpdateCustomerForm : Form
     {
         private MySqlConnection _connection;
         private string _user;
-        private CustomerRecordsForm parent;
+        private RecordsForm parent;
         private string _customerId;
-        public addUpdateCustomerForm(MySqlConnection connection, string user, CustomerRecordsForm form, string customerId = "")
+        public AddUpdateCustomerForm(MySqlConnection connection, string user, RecordsForm form, string customerId = "")
         {
             InitializeComponent();
             _connection = connection;
@@ -311,7 +311,7 @@ namespace C969_PA_HannahGoodall
                     }
                 }
 
-                parent.InitializeDataGrid();
+                parent.InitializeCustomerDataGrid();
                 this.Close();
             }
         }
