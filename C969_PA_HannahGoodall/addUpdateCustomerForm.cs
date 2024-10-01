@@ -45,7 +45,7 @@ namespace C969_PA_HannahGoodall
         private string cityId = "";
         private string countryId = "";
         private string addressId = "";
-        var createDate = DateTime.Now.ToString("yyyy-MM-dd");
+        private string createDate = DateTime.Now.ToString("yyyy-MM-dd");
         private void setCustomer()
         {
             string findCustomerSqlString = $"SELECT * FROM customer WHERE customerId = {_customerId};";
@@ -99,17 +99,13 @@ namespace C969_PA_HannahGoodall
                     //insert customer to the DB
 
                     //insert country
-                    string countryId = GetCountryId();
+                    countryId = GetCountryId();
                     _connection.Close();
                     if (string.IsNullOrEmpty(countryId))
                     {
                         try
                         {
-                            if (_connection.State == ConnectionState.Open)
-                            {
-                                _connection.Close();
-                            }
-                            else
+                            if (_connection.State == ConnectionState.Closed)
                             {
                                 _connection.Open();
                             }
@@ -119,7 +115,6 @@ namespace C969_PA_HannahGoodall
                             reader = countryInsertCmd.ExecuteReader();
                             _connection.Close();
                             countryId = GetCountryId();
-                            _connection.Close();
                         }
                         catch (Exception ex)
                         {
@@ -128,7 +123,7 @@ namespace C969_PA_HannahGoodall
                     }
 
                     //insert city
-                    string cityId = GetCityId();
+                    cityId = GetCityId();
                     if (string.IsNullOrEmpty(cityId))
                     {
                         try
@@ -143,7 +138,6 @@ namespace C969_PA_HannahGoodall
                             cityReader = cityInsertCmd.ExecuteReader();
                             _connection.Close();
                             cityId = GetCityId();
-                            _connection.Close();
                         }
                         catch (Exception ex)
                         {
@@ -162,7 +156,6 @@ namespace C969_PA_HannahGoodall
                     addressReader = addressInsertCmd.ExecuteReader();
                     _connection.Close();
                     string addressId = GetAddressId();
-                    _connection.Close();
 
                     //insert customer
                     if (_connection.State != ConnectionState.Open)
@@ -179,15 +172,22 @@ namespace C969_PA_HannahGoodall
                 {
                     if (nameTextbox.Text != name)
                     {
-                        if (_connection.State == ConnectionState.Closed)
+                        try
                         {
-                            _connection.Open();
+                            if (_connection.State == ConnectionState.Closed)
+                            {
+                                _connection.Open();
+                            }
+                            string updateNameSqlString = $"UPDATE customer SET customerName = '{nameTextbox.Text}' WHERE customerId = {_customerId};";
+                            MySqlCommand nameUpdateCmd = new MySqlCommand(updateNameSqlString, _connection);
+                            MySqlDataReader nameReader;
+                            nameReader = nameUpdateCmd.ExecuteReader();
+                            _connection.Close();
                         }
-                        string updateNameSqlString = $"UPDATE customer SET customerName = '{nameTextbox.Text}' WHERE customerId = {_customerId};";
-                        MySqlCommand nameUpdateCmd = new MySqlCommand(updateNameSqlString, _connection);
-                        MySqlDataReader nameReader;
-                        nameReader = nameUpdateCmd.ExecuteReader();
-                        _connection.Close();
+                        catch(Exception ex)
+                        {
+                            throw new Exception(ex.Message, ex);
+                        }
                     }
                     if (addressTextbox.Text != address)
                     {
@@ -291,7 +291,11 @@ namespace C969_PA_HannahGoodall
                                 _connection.Close();
                             }
                         }
-                        
+                        catch (Exception ex)
+                        {
+                            throw new Exception(ex.Message, ex);
+                        }
+
                     }
                     if (phoneTextbox.Text != phone)
                     {
