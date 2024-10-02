@@ -9,11 +9,13 @@ namespace C969_PA_HannahGoodall
     {
         private MySqlConnection _connection;
         private string _user;
-        public RecordsForm(MySqlConnection connection, string user)
+        private string _userId;
+        public RecordsForm(MySqlConnection connection, string user, string userId)
         {
             InitializeComponent();
             _connection = connection;
             _user = user;
+            _userId = userId;
 
             InitializeCustomerDataGrid();
             InitializeAppointmentDataGrid();
@@ -32,8 +34,7 @@ namespace C969_PA_HannahGoodall
         }
         public void InitializeCustomerDataGrid()
         {
-            
-            string sqlString = "use client_schedule; SELECT customerName, address, phone FROM customer, address WHERE customer.addressId = address.addressId;";
+            string sqlString = "use client_schedule; SELECT customerId, customerName, address, phone FROM customer, address WHERE customer.addressId = address.addressId;";
             MySqlCommand cmd = new MySqlCommand(sqlString, _connection);
             MySqlDataAdapter adapter = new MySqlDataAdapter(cmd);
 
@@ -140,7 +141,7 @@ namespace C969_PA_HannahGoodall
 
         private void addApptButton_Click(object sender, EventArgs e)
         {
-            var form = new AddUpdateAppointmentForm(_connection);
+            var form = new AddUpdateAppointmentForm(_connection, _userId, _user);
             form.Text = "Add Appointment";
             form.ShowDialog();
         }

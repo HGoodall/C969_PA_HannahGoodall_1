@@ -14,23 +14,20 @@ namespace C969_PA_HannahGoodall
     public partial class AddUpdateAppointmentForm : Form
     {
         private MySqlConnection _connection;
-        public AddUpdateAppointmentForm(MySqlConnection connection)
+        private string _userId;
+        private string _username;
+        public AddUpdateAppointmentForm(MySqlConnection connection, string userId, string username)
         {
             InitializeComponent();
             _connection = connection;
-            endTimePicker.ShowUpDown = true;
-            endTimePicker.CustomFormat = "hh:mm";
+            _userId = userId;
+            _username = username;
             endTimePicker.Format = DateTimePickerFormat.Custom;
-            startTimePicker.ShowUpDown = true;
-            startTimePicker.CustomFormat = "hh:mm";
+            endTimePicker.CustomFormat = "yyyy-MM-dd hh:mm:ss";
             startTimePicker.Format = DateTimePickerFormat.Custom;
+            startTimePicker.CustomFormat = "yyyy-MM-dd hh:mm:ss";
         }
-
-        private void AddUpdateAppointmentForm_Load(object sender, EventArgs e)
-        {
-
-        }
-
+        private string createDate = DateTime.Now.ToString("yyyy-MM-dd");
         private void cancelButton_Click(object sender, EventArgs e)
         {
             this.Close();
@@ -38,7 +35,15 @@ namespace C969_PA_HannahGoodall
 
         private void saveApptButton_Click(object sender, EventArgs e)
         {
-
+            if (_connection.State == ConnectionState.Closed)
+            {
+                _connection.Open();
+            }
+            string insertApptSqlString = $"INSERT INTO appointment (customerId, userId, title, description, location, contact, type, url, start, end, createDate, createdBy, lastUpdateBy) VALUES ('{customerIdTextBox.Text}', '{_userId}', '{string.Empty}', '{string.Empty}', '{string.Empty}', '{string.Empty}', '{typeTextBox.Text}', '{string.Empty}', '{startTimePicker.Text}', '{endTimePicker.Text}', '{createDate}', '{_username}', '{_username}');";
+            MySqlCommand insertCmd = new MySqlCommand(insertApptSqlString, _connection);
+            MySqlDataReader reader;
+            reader = insertCmd.ExecuteReader();
+            _connection.Close();
         }
     }
 }

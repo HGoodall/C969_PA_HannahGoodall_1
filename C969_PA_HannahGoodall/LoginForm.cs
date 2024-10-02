@@ -50,18 +50,20 @@ namespace C969_PA_HannahGoodall
         {
             string username = usernameTextbox.Text;
             string password = pwdTextbox.Text;
-            string sqlString = "SELECT userName, password FROM user;";
+            string sqlString = "SELECT userId, userName, password FROM user;";
             MySqlCommand cmd = new MySqlCommand(sqlString, _connection);
             MySqlDataAdapter adp = new MySqlDataAdapter(cmd);
 
             DataTable dt = new DataTable();
             adp.Fill(dt);
             bool match = false;
+            string userId = "";
             foreach (DataRow dr in dt.Rows)
             {
-                if (dr.ItemArray[0].ToString() == username && dr.ItemArray[1].ToString() == password)
+                if (dr["userName"].ToString() == username && dr["password"].ToString() == password)
                 {
                     match = true;
+                    userId = dr["userId"].ToString();
                     break;
                 }
                 else
@@ -71,7 +73,7 @@ namespace C969_PA_HannahGoodall
             }
             if (match)
             {
-                var customerForm = new RecordsForm(_connection, username);
+                var customerForm = new RecordsForm(_connection, username, userId);
                 this.Hide();
                 customerForm.ShowDialog();
             }
