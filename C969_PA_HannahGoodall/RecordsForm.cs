@@ -91,6 +91,7 @@ namespace C969_PA_HannahGoodall
                     MySqlDataReader reader;
                     reader = cmd.ExecuteReader();
                     _connection.Close();
+                    InitializeCustomerDataGrid();
                 }
             }
             else

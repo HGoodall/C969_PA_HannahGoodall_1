@@ -30,21 +30,23 @@
         {
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
-            this.calendar = new System.Windows.Forms.MonthCalendar();
             this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.textBox2 = new System.Windows.Forms.TextBox();
-            this.textBox3 = new System.Windows.Forms.TextBox();
-            this.textBox4 = new System.Windows.Forms.TextBox();
+            this.customerIdTextBox = new System.Windows.Forms.TextBox();
+            this.typeTextBox = new System.Windows.Forms.TextBox();
+            this.datePicker = new System.Windows.Forms.DateTimePicker();
+            this.startTimePicker = new System.Windows.Forms.DateTimePicker();
+            this.endTimePicker = new System.Windows.Forms.DateTimePicker();
+            this.saveApptButton = new System.Windows.Forms.Button();
+            this.cancelButton = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // label1
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F);
-            this.label1.Location = new System.Drawing.Point(67, 248);
+            this.label1.Location = new System.Drawing.Point(75, 66);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(36, 15);
             this.label1.TabIndex = 0;
@@ -54,24 +56,17 @@
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F);
-            this.label2.Location = new System.Drawing.Point(37, 290);
+            this.label2.Location = new System.Drawing.Point(45, 215);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(66, 15);
             this.label2.TabIndex = 1;
             this.label2.Text = "Start Time:";
             // 
-            // calendar
-            // 
-            this.calendar.Location = new System.Drawing.Point(117, 28);
-            this.calendar.Name = "calendar";
-            this.calendar.ShowTodayCircle = false;
-            this.calendar.TabIndex = 4;
-            // 
             // label4
             // 
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F);
-            this.label4.Location = new System.Drawing.Point(64, 28);
+            this.label4.Location = new System.Drawing.Point(75, 164);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(36, 15);
             this.label4.TabIndex = 5;
@@ -81,7 +76,7 @@
             // 
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F);
-            this.label3.Location = new System.Drawing.Point(37, 330);
+            this.label3.Location = new System.Drawing.Point(48, 266);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(63, 15);
             this.label3.TabIndex = 2;
@@ -91,52 +86,81 @@
             // 
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F);
-            this.label5.Location = new System.Drawing.Point(25, 209);
+            this.label5.Location = new System.Drawing.Point(33, 115);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(78, 15);
             this.label5.TabIndex = 6;
             this.label5.Text = "Customer ID:";
             // 
-            // textBox1
+            // customerIdTextBox
             // 
-            this.textBox1.Location = new System.Drawing.Point(117, 208);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(171, 20);
-            this.textBox1.TabIndex = 7;
+            this.customerIdTextBox.Location = new System.Drawing.Point(125, 114);
+            this.customerIdTextBox.Name = "customerIdTextBox";
+            this.customerIdTextBox.Size = new System.Drawing.Size(196, 20);
+            this.customerIdTextBox.TabIndex = 7;
             // 
-            // textBox2
+            // typeTextBox
             // 
-            this.textBox2.Location = new System.Drawing.Point(117, 247);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(171, 20);
-            this.textBox2.TabIndex = 8;
+            this.typeTextBox.Location = new System.Drawing.Point(125, 65);
+            this.typeTextBox.Name = "typeTextBox";
+            this.typeTextBox.Size = new System.Drawing.Size(196, 20);
+            this.typeTextBox.TabIndex = 8;
             // 
-            // textBox3
+            // datePicker
             // 
-            this.textBox3.Location = new System.Drawing.Point(117, 289);
-            this.textBox3.Name = "textBox3";
-            this.textBox3.Size = new System.Drawing.Size(171, 20);
-            this.textBox3.TabIndex = 9;
+            this.datePicker.Location = new System.Drawing.Point(125, 159);
+            this.datePicker.Name = "datePicker";
+            this.datePicker.Size = new System.Drawing.Size(196, 20);
+            this.datePicker.TabIndex = 11;
             // 
-            // textBox4
+            // startTimePicker
             // 
-            this.textBox4.Location = new System.Drawing.Point(117, 329);
-            this.textBox4.Name = "textBox4";
-            this.textBox4.Size = new System.Drawing.Size(171, 20);
-            this.textBox4.TabIndex = 10;
+            this.startTimePicker.Location = new System.Drawing.Point(125, 211);
+            this.startTimePicker.Name = "startTimePicker";
+            this.startTimePicker.Size = new System.Drawing.Size(196, 20);
+            this.startTimePicker.TabIndex = 12;
+            // 
+            // endTimePicker
+            // 
+            this.endTimePicker.Location = new System.Drawing.Point(125, 262);
+            this.endTimePicker.Name = "endTimePicker";
+            this.endTimePicker.Size = new System.Drawing.Size(196, 20);
+            this.endTimePicker.TabIndex = 13;
+            // 
+            // saveApptButton
+            // 
+            this.saveApptButton.Location = new System.Drawing.Point(125, 328);
+            this.saveApptButton.Name = "saveApptButton";
+            this.saveApptButton.Size = new System.Drawing.Size(75, 23);
+            this.saveApptButton.TabIndex = 14;
+            this.saveApptButton.Text = "Save";
+            this.saveApptButton.UseVisualStyleBackColor = true;
+            this.saveApptButton.Click += new System.EventHandler(this.saveApptButton_Click);
+            // 
+            // cancelButton
+            // 
+            this.cancelButton.Location = new System.Drawing.Point(246, 328);
+            this.cancelButton.Name = "cancelButton";
+            this.cancelButton.Size = new System.Drawing.Size(75, 23);
+            this.cancelButton.TabIndex = 15;
+            this.cancelButton.Text = "Cancel";
+            this.cancelButton.UseVisualStyleBackColor = true;
+            this.cancelButton.Click += new System.EventHandler(this.cancelButton_Click);
             // 
             // AddUpdateAppointmentForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(397, 374);
-            this.Controls.Add(this.textBox4);
-            this.Controls.Add(this.textBox3);
-            this.Controls.Add(this.textBox2);
-            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.cancelButton);
+            this.Controls.Add(this.saveApptButton);
+            this.Controls.Add(this.endTimePicker);
+            this.Controls.Add(this.startTimePicker);
+            this.Controls.Add(this.datePicker);
+            this.Controls.Add(this.typeTextBox);
+            this.Controls.Add(this.customerIdTextBox);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.label4);
-            this.Controls.Add(this.calendar);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
@@ -152,13 +176,15 @@
 
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.MonthCalendar calendar;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.TextBox textBox2;
-        private System.Windows.Forms.TextBox textBox3;
-        private System.Windows.Forms.TextBox textBox4;
+        private System.Windows.Forms.TextBox customerIdTextBox;
+        private System.Windows.Forms.TextBox typeTextBox;
+        private System.Windows.Forms.DateTimePicker datePicker;
+        private System.Windows.Forms.DateTimePicker startTimePicker;
+        private System.Windows.Forms.DateTimePicker endTimePicker;
+        private System.Windows.Forms.Button saveApptButton;
+        private System.Windows.Forms.Button cancelButton;
     }
 }
