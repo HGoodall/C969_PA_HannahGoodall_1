@@ -110,10 +110,28 @@ namespace C969_PA_HannahGoodall
             }
             var startTime = startTimePicker.Value.TimeOfDay;
             var startDate = startTimePicker.Value.DayOfWeek;
-            if(startTime.Hours < 9)
+            var endTime = endTimePicker.Value.TimeOfDay;
+            var endDate = endTimePicker.Value.DayOfWeek;
+            if (startTime.Hours < 9 || startTime.Hours > 5)
+            {
+                var tooltip = new ToolTip();
+                tooltip.ToolTipIcon = ToolTipIcon.Info;
+                tooltip.IsBalloon = true;
+                tooltip.ShowAlways = true;
+                tooltip.SetToolTip(startTimePicker, "Appointments must be scheduled from 9AM - 5PM.");
+
+                valid = false;
+            }
+            else
+            {
+                startToolTip.Active = false;
+                startTimePicker.BackColor = Color.White;
+                valid = false;
+            }
+            if (startDate == DayOfWeek.Sunday || startDate == DayOfWeek.Saturday)
             {
                 startToolTip.Active = true;
-                startToolTip.Show("Start Time cannot be before 9 AM.", typeTextBox);
+                startToolTip.Show("Appointment must be Monday-Friday", startTimePicker);
                 startTimePicker.BackColor = Color.Red;
                 valid = false;
             }
@@ -123,7 +141,33 @@ namespace C969_PA_HannahGoodall
                 startTimePicker.BackColor = Color.White;
                 valid = false;
             }
-            return true;
+            if (endTime.Hours < 9 || endTime.Hours > 5)
+            {
+                endToolTip.Active = true;
+                endToolTip.Show("Appointments must be scheduled from 9AM - 5PM.", endTimePicker);
+                endTimePicker.BackColor = Color.Red;
+                valid = false;
+            }
+            else
+            {
+                endToolTip.Active = false;
+                endTimePicker.BackColor = Color.White;
+                valid = false;
+            }
+            if (endDate == DayOfWeek.Sunday || endDate == DayOfWeek.Saturday)
+            {
+                endToolTip.Active = true;
+                endToolTip.Show("Appointment must be Monday-Friday", endTimePicker);
+                endTimePicker.BackColor = Color.Red;
+                valid = false;
+            }
+            else
+            {
+                endToolTip.Active = false;
+                endTimePicker.BackColor = Color.White;
+                valid = false;
+            }
+            return valid;
         }
 
         private void typeTextBox_TextChanged(object sender, EventArgs e)
