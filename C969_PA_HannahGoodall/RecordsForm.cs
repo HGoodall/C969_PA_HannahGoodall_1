@@ -141,7 +141,7 @@ namespace C969_PA_HannahGoodall
 
         private void addApptButton_Click(object sender, EventArgs e)
         {
-            var form = new AddUpdateAppointmentForm(_connection, _userId, _user);
+            var form = new AddUpdateAppointmentForm(_connection, this, _userId, _user);
             form.Text = "Add Appointment";
             form.ShowDialog();
         }

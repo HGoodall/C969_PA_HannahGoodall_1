@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
@@ -38,6 +39,10 @@
             this.endTimePicker = new System.Windows.Forms.DateTimePicker();
             this.saveApptButton = new System.Windows.Forms.Button();
             this.cancelButton = new System.Windows.Forms.Button();
+            this.typeToolTip = new System.Windows.Forms.ToolTip(this.components);
+            this.custIdToolTip = new System.Windows.Forms.ToolTip(this.components);
+            this.startToolTip = new System.Windows.Forms.ToolTip(this.components);
+            this.endToolTip = new System.Windows.Forms.ToolTip(this.components);
             this.SuspendLayout();
             // 
             // label1
@@ -86,6 +91,7 @@
             this.customerIdTextBox.Name = "customerIdTextBox";
             this.customerIdTextBox.Size = new System.Drawing.Size(196, 20);
             this.customerIdTextBox.TabIndex = 4;
+            this.customerIdTextBox.TextChanged += new System.EventHandler(this.customerIdTextBox_TextChanged);
             // 
             // typeTextBox
             // 
@@ -93,6 +99,7 @@
             this.typeTextBox.Name = "typeTextBox";
             this.typeTextBox.Size = new System.Drawing.Size(196, 20);
             this.typeTextBox.TabIndex = 2;
+            this.typeTextBox.TextChanged += new System.EventHandler(this.typeTextBox_TextChanged);
             // 
             // startTimePicker
             // 
@@ -110,7 +117,7 @@
             // 
             // saveApptButton
             // 
-            this.saveApptButton.Location = new System.Drawing.Point(125, 328);
+            this.saveApptButton.Location = new System.Drawing.Point(125, 313);
             this.saveApptButton.Name = "saveApptButton";
             this.saveApptButton.Size = new System.Drawing.Size(75, 23);
             this.saveApptButton.TabIndex = 14;
@@ -120,7 +127,7 @@
             // 
             // cancelButton
             // 
-            this.cancelButton.Location = new System.Drawing.Point(246, 328);
+            this.cancelButton.Location = new System.Drawing.Point(246, 313);
             this.cancelButton.Name = "cancelButton";
             this.cancelButton.Size = new System.Drawing.Size(75, 23);
             this.cancelButton.TabIndex = 15;
@@ -162,5 +169,9 @@
         private System.Windows.Forms.DateTimePicker endTimePicker;
         private System.Windows.Forms.Button saveApptButton;
         private System.Windows.Forms.Button cancelButton;
+        private System.Windows.Forms.ToolTip typeToolTip;
+        private System.Windows.Forms.ToolTip custIdToolTip;
+        private System.Windows.Forms.ToolTip startToolTip;
+        private System.Windows.Forms.ToolTip endToolTip;
     }
 }
