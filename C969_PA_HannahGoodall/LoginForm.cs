@@ -36,10 +36,6 @@ namespace C969_PA_HannahGoodall
             }
         }
 
-        private void LoginForm_Load(object sender, EventArgs e)
-        {
-
-        }
 
         private void cancelButton_Click(object sender, EventArgs e)
         {

@@ -26,9 +26,9 @@ namespace C969_PA_HannahGoodall
         }
         private void InitializeDataGrid()
         {
-            var parsedDate = _apptDate.Value.Date.ToString("yyyy-MM-dd") + _apptDate.Value.TimeOfDay.ToString();
-            string sqlString = "SELECT type, customer.customerName, CONCAT(cast(start as time), ' - ', cast(end as time)) AS scheduleTime FROM appointment, customer " +
-                $"WHERE appointment.customerId = customer.customerId AND start = {parsedDate};";
+            var parsedDate = _apptDate.Value.Date.ToString("yyyy-MM-dd");
+            apptDateLabel.Text += parsedDate;
+            string sqlString = $"SELECT type, customer.customerName, CONCAT(cast(start as time), ' - ', cast(end as time)) AS scheduleTime FROM appointment, customer WHERE appointment.customerId = customer.customerId AND cast(start as date) = '{parsedDate}';";
             MySqlCommand cmd = new MySqlCommand(sqlString, _connection);
             MySqlDataAdapter adapter = new MySqlDataAdapter(cmd);
 

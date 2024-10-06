@@ -41,6 +41,8 @@
             this.closeButton = new System.Windows.Forms.Button();
             this.ApptByDayPicker = new System.Windows.Forms.DateTimePicker();
             this.label3 = new System.Windows.Forms.Label();
+            this.utcApptsRadio = new System.Windows.Forms.RadioButton();
+            this.localApptsRadio = new System.Windows.Forms.RadioButton();
             ((System.ComponentModel.ISupportInitialize)(this.customerDataGrid)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.appointmentDataGrid)).BeginInit();
             this.SuspendLayout();
@@ -76,7 +78,7 @@
             this.appointmentDataGrid.ReadOnly = true;
             this.appointmentDataGrid.RowHeadersVisible = false;
             this.appointmentDataGrid.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.appointmentDataGrid.Size = new System.Drawing.Size(412, 248);
+            this.appointmentDataGrid.Size = new System.Drawing.Size(445, 248);
             this.appointmentDataGrid.TabIndex = 2;
             // 
             // label1
@@ -193,11 +195,37 @@
             this.label3.TabIndex = 14;
             this.label3.Text = "View Appointments By Day:";
             // 
+            // utcApptsRadio
+            // 
+            this.utcApptsRadio.AutoSize = true;
+            this.utcApptsRadio.Checked = true;
+            this.utcApptsRadio.Location = new System.Drawing.Point(440, 379);
+            this.utcApptsRadio.Name = "utcApptsRadio";
+            this.utcApptsRadio.Size = new System.Drawing.Size(140, 17);
+            this.utcApptsRadio.TabIndex = 15;
+            this.utcApptsRadio.TabStop = true;
+            this.utcApptsRadio.Text = "UTC Time Appointments";
+            this.utcApptsRadio.UseVisualStyleBackColor = true;
+            this.utcApptsRadio.CheckedChanged += new System.EventHandler(this.utcApptsRadio_CheckedChanged);
+            // 
+            // localApptsRadio
+            // 
+            this.localApptsRadio.AutoSize = true;
+            this.localApptsRadio.Location = new System.Drawing.Point(586, 379);
+            this.localApptsRadio.Name = "localApptsRadio";
+            this.localApptsRadio.Size = new System.Drawing.Size(144, 17);
+            this.localApptsRadio.TabIndex = 16;
+            this.localApptsRadio.Text = "Local Time Appointments";
+            this.localApptsRadio.UseVisualStyleBackColor = true;
+            this.localApptsRadio.CheckedChanged += new System.EventHandler(this.localApptsRadio_CheckedChanged);
+            // 
             // RecordsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(931, 408);
+            this.Controls.Add(this.localApptsRadio);
+            this.Controls.Add(this.utcApptsRadio);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.ApptByDayPicker);
             this.Controls.Add(this.closeButton);
@@ -235,5 +263,7 @@
         private System.Windows.Forms.Button closeButton;
         private System.Windows.Forms.DateTimePicker ApptByDayPicker;
         private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.RadioButton utcApptsRadio;
+        private System.Windows.Forms.RadioButton localApptsRadio;
     }
 }

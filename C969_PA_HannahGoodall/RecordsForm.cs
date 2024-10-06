@@ -16,9 +16,34 @@ namespace C969_PA_HannahGoodall
             _connection = connection;
             _user = user;
             _userId = userId;
-
+            UpcomingAppointment();
             InitializeCustomerDataGrid();
             InitializeAppointmentDataGrid();
+
+        }
+        private void UpcomingAppointment()
+        {
+            string sqlString = "SELECT userId, start FROM appointment;";
+            MySqlCommand cmd = new MySqlCommand(sqlString, _connection);
+            MySqlDataAdapter adp = new MySqlDataAdapter(cmd);
+            DataTable dt = new DataTable();
+            adp.Fill(dt);
+            foreach (DataRow dr in dt.Rows)
+            {
+                if (dr["userId"].ToString() == _userId)
+                {
+                    var dbTime = DateTime.Parse(dr["start"].ToString()).TimeOfDay;
+                    var timeNow = DateTime.Now.TimeOfDay;
+                    if (DateTime.Parse(dr["start"].ToString()).Date == DateTime.Now.Date)
+                    {
+                        var diff = dbTime.Subtract(timeNow);
+                        if (diff.TotalMinutes <= 15)
+                        {
+                            MessageBox.Show("You have an upcoming appointment in 15 minutes or less!");
+                        }
+                    }
+                }
+            }
 
         }
         public void InitializeAppointmentDataGrid()
@@ -29,6 +54,29 @@ namespace C969_PA_HannahGoodall
 
             DataTable dt = new DataTable();
             adapter.Fill(dt);
+
+            appointmentDataGrid.DataSource = dt;
+        }
+        private void InitializeAppointmentLocalDataGrid()
+        {
+            string sqlString = "SELECT type, customer.customerName, cast(start as date) AS scheduleDate,  CONCAT(cast(start as time), ' - ', cast(end as time)) AS scheduleTime FROM appointment, customer WHERE appointment.customerId = customer.customerId;";
+            MySqlCommand cmd = new MySqlCommand(sqlString, _connection);
+            MySqlDataAdapter adapter = new MySqlDataAdapter(cmd);
+
+            DataTable dt = new DataTable();
+            adapter.Fill(dt);
+            foreach (DataRow dr in dt.Rows)
+            {
+                DateTime convertedStartTime = DateTime.SpecifyKind(
+                        DateTime.Parse(dr["scheduleTime"].ToString().Split('-')[0]),
+                        DateTimeKind.Utc);
+                DateTime convertedEndTime = DateTime.SpecifyKind(
+                        DateTime.Parse(dr["scheduleTime"].ToString().Split('-')[1]),
+                        DateTimeKind.Utc);
+                var startDt = convertedStartTime.ToLocalTime().ToString("hh:mm tt");
+                var endDt = convertedEndTime.ToLocalTime().ToString("hh:mm tt");
+                dr["scheduleTime"] = $"{startDt} - {endDt}";
+            }
 
             appointmentDataGrid.DataSource = dt;
         }
@@ -131,7 +179,7 @@ namespace C969_PA_HannahGoodall
                 }
                 return customerId;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 throw new Exception(ex.Message, ex);
             }
@@ -196,6 +244,24 @@ namespace C969_PA_HannahGoodall
         {
             var dailyApptsForm = new DailyApptsForm(_connection, ApptByDayPicker);
             dailyApptsForm.ShowDialog();
+        }
+
+        private void localApptsRadio_CheckedChanged(object sender, EventArgs e)
+        {
+
+            if (localApptsRadio.Checked)
+            {
+                InitializeAppointmentLocalDataGrid();
+            }
+
+        }
+
+        private void utcApptsRadio_CheckedChanged(object sender, EventArgs e)
+        {
+            if (utcApptsRadio.Checked)
+            {
+                InitializeAppointmentDataGrid();
+            }
         }
     }
 }
