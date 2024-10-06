@@ -38,11 +38,11 @@
             this.startTimePicker = new System.Windows.Forms.DateTimePicker();
             this.endTimePicker = new System.Windows.Forms.DateTimePicker();
             this.saveApptButton = new System.Windows.Forms.Button();
-            this.cancelButton = new System.Windows.Forms.Button();
             this.typeToolTip = new System.Windows.Forms.ToolTip(this.components);
             this.custIdToolTip = new System.Windows.Forms.ToolTip(this.components);
             this.startToolTip = new System.Windows.Forms.ToolTip(this.components);
             this.endToolTip = new System.Windows.Forms.ToolTip(this.components);
+            this.cancelButton = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // label1
@@ -168,10 +168,10 @@
         private System.Windows.Forms.DateTimePicker startTimePicker;
         private System.Windows.Forms.DateTimePicker endTimePicker;
         private System.Windows.Forms.Button saveApptButton;
-        private System.Windows.Forms.Button cancelButton;
         private System.Windows.Forms.ToolTip typeToolTip;
         private System.Windows.Forms.ToolTip custIdToolTip;
         private System.Windows.Forms.ToolTip startToolTip;
         private System.Windows.Forms.ToolTip endToolTip;
+        private System.Windows.Forms.Button cancelButton;
     }
 }

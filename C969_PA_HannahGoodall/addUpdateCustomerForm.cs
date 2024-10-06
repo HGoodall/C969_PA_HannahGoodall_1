@@ -48,46 +48,53 @@ namespace C969_PA_HannahGoodall
         private string createDate = DateTime.Now.ToString("yyyy-MM-dd");
         private void setCustomer()
         {
-            string findCustomerSqlString = $"SELECT * FROM customer WHERE customerId = {_customerId};";
-            MySqlCommand findCustomerCmd = new MySqlCommand(findCustomerSqlString, _connection);
-            MySqlDataAdapter findCusAdp = new MySqlDataAdapter(findCustomerCmd);
-            DataTable dt = new DataTable();
-            findCusAdp.Fill(dt);
+            try
+            {
+                string findCustomerSqlString = $"SELECT * FROM customer WHERE customerId = {_customerId};";
+                MySqlCommand findCustomerCmd = new MySqlCommand(findCustomerSqlString, _connection);
+                MySqlDataAdapter findCusAdp = new MySqlDataAdapter(findCustomerCmd);
+                DataTable dt = new DataTable();
+                findCusAdp.Fill(dt);
 
-            nameTextbox.Text = dt.Rows[0]["customerName"].ToString();
-            name = nameTextbox.Text;
-            addressId = dt.Rows[0]["addressId"].ToString();
+                nameTextbox.Text = dt.Rows[0]["customerName"].ToString();
+                name = nameTextbox.Text;
+                addressId = dt.Rows[0]["addressId"].ToString();
 
-            string findAddressSqlString = $"SELECT * FROM address WHERE addressId = {addressId};";
-            MySqlCommand findAddressCmd = new MySqlCommand(findAddressSqlString, _connection);
-            MySqlDataAdapter findAddressAdp = new MySqlDataAdapter(findAddressCmd);
-            DataTable dt1 = new DataTable();
-            findAddressAdp.Fill(dt1);
+                string findAddressSqlString = $"SELECT * FROM address WHERE addressId = {addressId};";
+                MySqlCommand findAddressCmd = new MySqlCommand(findAddressSqlString, _connection);
+                MySqlDataAdapter findAddressAdp = new MySqlDataAdapter(findAddressCmd);
+                DataTable dt1 = new DataTable();
+                findAddressAdp.Fill(dt1);
 
-            addressTextbox.Text = dt1.Rows[0]["address"].ToString();
-            address = addressTextbox.Text;
-            phoneTextbox.Text = dt1.Rows[0]["phone"].ToString();
-            phone = phoneTextbox.Text;
-            cityId = dt1.Rows[0]["cityId"].ToString();
+                addressTextbox.Text = dt1.Rows[0]["address"].ToString();
+                address = addressTextbox.Text;
+                phoneTextbox.Text = dt1.Rows[0]["phone"].ToString();
+                phone = phoneTextbox.Text;
+                cityId = dt1.Rows[0]["cityId"].ToString();
 
-            string findCitySqlString = $"SELECT * FROM city WHERE cityId = {cityId};";
-            MySqlCommand findCityCmd = new MySqlCommand(findCitySqlString, _connection);
-            MySqlDataAdapter findCityAdp = new MySqlDataAdapter(findCityCmd);
-            DataTable dt2 = new DataTable();
-            findCityAdp.Fill(dt2);
+                string findCitySqlString = $"SELECT * FROM city WHERE cityId = {cityId};";
+                MySqlCommand findCityCmd = new MySqlCommand(findCitySqlString, _connection);
+                MySqlDataAdapter findCityAdp = new MySqlDataAdapter(findCityCmd);
+                DataTable dt2 = new DataTable();
+                findCityAdp.Fill(dt2);
 
-            cityTextbox.Text = dt2.Rows[0]["city"].ToString();
-            city = cityTextbox.Text;
-            countryId = dt2.Rows[0]["countryId"].ToString();
+                cityTextbox.Text = dt2.Rows[0]["city"].ToString();
+                city = cityTextbox.Text;
+                countryId = dt2.Rows[0]["countryId"].ToString();
 
-            string findCountrySqlString = $"SELECT * FROM country WHERE countryId = {countryId};";
-            MySqlCommand findCountryCmd = new MySqlCommand(findCountrySqlString, _connection);
-            MySqlDataAdapter findCountryAdp = new MySqlDataAdapter(findCountryCmd);
-            DataTable dt3 = new DataTable();
-            findCountryAdp.Fill(dt3);
+                string findCountrySqlString = $"SELECT * FROM country WHERE countryId = {countryId};";
+                MySqlCommand findCountryCmd = new MySqlCommand(findCountrySqlString, _connection);
+                MySqlDataAdapter findCountryAdp = new MySqlDataAdapter(findCountryCmd);
+                DataTable dt3 = new DataTable();
+                findCountryAdp.Fill(dt3);
 
-            countryTextbox.Text = dt3.Rows[0]["country"].ToString();
-            country = countryTextbox.Text;
+                countryTextbox.Text = dt3.Rows[0]["country"].ToString();
+                country = countryTextbox.Text;
+            }
+            catch(Exception ex)
+            {
+                throw new Exception(ex.Message, ex);
+            }
 
         }
         private void saveCusButton_Click(object sender, EventArgs e)

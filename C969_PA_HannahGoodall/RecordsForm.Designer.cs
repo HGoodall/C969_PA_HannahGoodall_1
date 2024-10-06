@@ -39,6 +39,8 @@
             this.updateApptButton = new System.Windows.Forms.Button();
             this.addApptButton = new System.Windows.Forms.Button();
             this.closeButton = new System.Windows.Forms.Button();
+            this.ApptByDayPicker = new System.Windows.Forms.DateTimePicker();
+            this.label3 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.customerDataGrid)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.appointmentDataGrid)).BeginInit();
             this.SuspendLayout();
@@ -69,11 +71,12 @@
             this.appointmentDataGrid.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.appointmentDataGrid.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.DisplayedCells;
             this.appointmentDataGrid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.appointmentDataGrid.Location = new System.Drawing.Point(432, 52);
+            this.appointmentDataGrid.Location = new System.Drawing.Point(440, 52);
             this.appointmentDataGrid.Name = "appointmentDataGrid";
             this.appointmentDataGrid.ReadOnly = true;
             this.appointmentDataGrid.RowHeadersVisible = false;
-            this.appointmentDataGrid.Size = new System.Drawing.Size(336, 248);
+            this.appointmentDataGrid.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.appointmentDataGrid.Size = new System.Drawing.Size(412, 248);
             this.appointmentDataGrid.TabIndex = 2;
             // 
             // label1
@@ -90,7 +93,7 @@
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
-            this.label2.Location = new System.Drawing.Point(429, 32);
+            this.label2.Location = new System.Drawing.Point(437, 32);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(94, 17);
             this.label2.TabIndex = 4;
@@ -132,7 +135,7 @@
             // deleteApptButton
             // 
             this.deleteApptButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F);
-            this.deleteApptButton.Location = new System.Drawing.Point(606, 306);
+            this.deleteApptButton.Location = new System.Drawing.Point(614, 306);
             this.deleteApptButton.Name = "deleteApptButton";
             this.deleteApptButton.Size = new System.Drawing.Size(72, 23);
             this.deleteApptButton.TabIndex = 10;
@@ -143,7 +146,7 @@
             // updateApptButton
             // 
             this.updateApptButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F);
-            this.updateApptButton.Location = new System.Drawing.Point(519, 306);
+            this.updateApptButton.Location = new System.Drawing.Point(527, 306);
             this.updateApptButton.Name = "updateApptButton";
             this.updateApptButton.Size = new System.Drawing.Size(72, 23);
             this.updateApptButton.TabIndex = 9;
@@ -154,7 +157,7 @@
             // addApptButton
             // 
             this.addApptButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F);
-            this.addApptButton.Location = new System.Drawing.Point(432, 306);
+            this.addApptButton.Location = new System.Drawing.Point(440, 306);
             this.addApptButton.Name = "addApptButton";
             this.addApptButton.Size = new System.Drawing.Size(72, 23);
             this.addApptButton.TabIndex = 8;
@@ -173,11 +176,30 @@
             this.closeButton.UseVisualStyleBackColor = true;
             this.closeButton.Click += new System.EventHandler(this.closeButton_Click);
             // 
+            // ApptByDayPicker
+            // 
+            this.ApptByDayPicker.Location = new System.Drawing.Point(579, 342);
+            this.ApptByDayPicker.Name = "ApptByDayPicker";
+            this.ApptByDayPicker.Size = new System.Drawing.Size(200, 20);
+            this.ApptByDayPicker.TabIndex = 13;
+            this.ApptByDayPicker.ValueChanged += new System.EventHandler(this.ApptByDayPicker_ValueChanged);
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(437, 345);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(137, 13);
+            this.label3.TabIndex = 14;
+            this.label3.Text = "View Appointments By Day:";
+            // 
             // RecordsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(931, 408);
+            this.Controls.Add(this.label3);
+            this.Controls.Add(this.ApptByDayPicker);
             this.Controls.Add(this.closeButton);
             this.Controls.Add(this.deleteApptButton);
             this.Controls.Add(this.updateApptButton);
@@ -211,5 +233,7 @@
         private System.Windows.Forms.Button updateApptButton;
         private System.Windows.Forms.Button addApptButton;
         private System.Windows.Forms.Button closeButton;
+        private System.Windows.Forms.DateTimePicker ApptByDayPicker;
+        private System.Windows.Forms.Label label3;
     }
 }
