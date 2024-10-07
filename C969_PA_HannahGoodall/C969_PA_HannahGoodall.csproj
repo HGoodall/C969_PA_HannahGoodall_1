@@ -116,6 +116,12 @@
     <Compile Include="DailyApptsForm.Designer.cs">
       <DependentUpon>DailyApptsForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="GeneratedReportForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GeneratedReportForm.Designer.cs">
+      <DependentUpon>GeneratedReportForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="RecordsForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -141,6 +147,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="DailyApptsForm.resx">
       <DependentUpon>DailyApptsForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GeneratedReportForm.resx">
+      <DependentUpon>GeneratedReportForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="RecordsForm.resx">
       <DependentUpon>RecordsForm.cs</DependentUpon>

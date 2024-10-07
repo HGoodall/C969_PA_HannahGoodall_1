@@ -229,7 +229,7 @@ namespace C969_PA_HannahGoodall
                     valid = false;
                     MessageBox.Show("End time must be Monday-Friday");
                 }
-                if (endTime > startTime)
+                if (endTime < startTime)
                 {
                     valid = false;
                     MessageBox.Show("End time cannot be before start time.");

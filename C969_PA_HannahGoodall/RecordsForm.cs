@@ -1,6 +1,9 @@
 ﻿using MySql.Data.MySqlClient;
 using System;
+using System.Collections.Generic;
 using System.Data;
+using System.Diagnostics.Contracts;
+using System.Linq;
 using System.Windows.Forms;
 
 namespace C969_PA_HannahGoodall
@@ -262,6 +265,80 @@ namespace C969_PA_HannahGoodall
             {
                 InitializeAppointmentDataGrid();
             }
+        }
+
+        private void apptTypeReportButton_Click(object sender, EventArgs e)
+        {
+            string sqlString = $"SELECT type, start FROM appointment;";
+            MySqlCommand cmd = new MySqlCommand(sqlString, _connection);
+            MySqlDataAdapter adp = new MySqlDataAdapter(cmd);
+            DataTable dt = new DataTable();
+            adp.Fill(dt);
+
+            var collection = dt.Rows.Cast<DataRow>().ToList();
+            var dates = collection.Select(r => r["start"].ToString()).ToList();
+
+            string report = "";
+            for (int i = 1; i < 13; i++)
+            {
+                var count = collection.Where(row => DateTime.Parse(row["start"].ToString()).Month == i).Select(row => row["type"].ToString()).Distinct().ToList().Count;
+                report += $"There are {count} types of appointments in month {i}.\n";
+            }
+            var form = new GeneratedReportForm(_connection, report);
+            form.ShowDialog();
+        }
+
+        private void userScheduleButton_Click(object sender, EventArgs e)
+        {
+            string sqlString = $"SELECT COUNT(userId) AS count FROM appointment WHERE userId = '{userIdScheduleTextBox.Text}'";
+            MySqlCommand cmd = new MySqlCommand(sqlString, _connection);
+            MySqlDataAdapter adp = new MySqlDataAdapter(cmd);
+            DataTable dt = new DataTable();
+            adp.Fill(dt);
+            if (!string.IsNullOrEmpty(userIdScheduleTextBox.Text))
+            {
+
+                if (Convert.ToInt32(dt.Rows[0]["count"].ToString()) > 0)
+                {
+                    var form = new GeneratedReportForm(_connection, "", userIdScheduleTextBox.Text);
+                    form.ShowDialog();
+                }
+                else
+                {
+                    MessageBox.Show("User ID does not have any appointments.");
+                }
+            }
+            else
+            {
+                MessageBox.Show("Must enter a User ID to view schedule.");
+            }
+        }
+
+        private void customerAppointmentsButton_Click(object sender, EventArgs e)
+        {
+            string sqlString = $"SELECT customerId, start FROM appointment;";
+            MySqlCommand cmd = new MySqlCommand(sqlString, _connection);
+            MySqlDataAdapter adp = new MySqlDataAdapter(cmd);
+            DataTable dt = new DataTable();
+            adp.Fill(dt);
+
+            var collection = dt.Rows.Cast<DataRow>().ToList();
+            var dates = collection.Select(r => r["start"].ToString()).ToList();
+
+            string report = "";
+            for (int i = 1; i < 13; i++)
+            {
+                int j = 0;
+                var list = collection.Where(row => DateTime.Parse(row["start"].ToString()).Month == i).Select(row => row["customerId"].ToString()).ToList();
+                var count = collection.Where(row => DateTime.Parse(row["start"].ToString()).Month == i).Select(row => row["customerId"].ToString()).Distinct().ToList().Count();
+                while (j < list.Count)
+                {
+                    report += $"CustomerId {list[j]} has {count} appointments in month {i}.\n";
+                    j++;
+                }
+            }
+            var form = new GeneratedReportForm(_connection, report);
+            form.ShowDialog();
         }
     }
 }
