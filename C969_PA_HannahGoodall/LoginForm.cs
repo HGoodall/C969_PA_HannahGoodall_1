@@ -69,9 +69,10 @@ namespace C969_PA_HannahGoodall
             }
             if (match)
             {
-                var customerForm = new RecordsForm(_connection, username, userId);
+                var loginTime = DateTime.Now;
+                var recordsForm = new RecordsForm(_connection, username, userId, loginTime);
                 this.Hide();
-                customerForm.ShowDialog();
+                recordsForm.ShowDialog();
             }
             else
             {

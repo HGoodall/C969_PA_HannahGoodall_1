@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Diagnostics.Contracts;
+using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 
@@ -13,12 +14,14 @@ namespace C969_PA_HannahGoodall
         private MySqlConnection _connection;
         private string _user;
         private string _userId;
-        public RecordsForm(MySqlConnection connection, string user, string userId)
+        private DateTime _loginTime;
+        public RecordsForm(MySqlConnection connection, string user, string userId, DateTime loginTime)
         {
             InitializeComponent();
             _connection = connection;
             _user = user;
             _userId = userId;
+            _loginTime = loginTime;
             UpcomingAppointment();
             InitializeCustomerDataGrid();
             InitializeAppointmentDataGrid();
@@ -99,8 +102,10 @@ namespace C969_PA_HannahGoodall
             this.Close();
         }
 
-        private void CustomerRecordsForm_FormClosed(object sender, FormClosedEventArgs e)
+        private async void CustomerRecordsForm_FormClosed(object sender, FormClosedEventArgs e)
         {
+
+            File.AppendAllText("Login_History.txt", $"{_user} logged in at {_loginTime}\n");
             Application.Exit();
         }
 
@@ -218,7 +223,35 @@ namespace C969_PA_HannahGoodall
 
         private void deleteApptButton_Click(object sender, EventArgs e)
         {
-
+            if (appointmentDataGrid.SelectedRows.Count > 0)
+            {
+                var confirmation = MessageBox.Show("Are you sure you would like to delete this appointment?", "Confirm Deletion", MessageBoxButtons.YesNo);
+                if (confirmation == DialogResult.Yes)
+                {
+                    if (_connection.State != ConnectionState.Open)
+                    {
+                        _connection.Open();
+                    }
+                    var appointmentId = GetSelectedAppointmentId();
+                    string deleteApptSqlString = $"DELETE FROM appointment WHERE appointmentId = '{appointmentId}';";
+                    MySqlCommand cmd = new MySqlCommand(deleteApptSqlString, _connection);
+                    MySqlDataReader reader;
+                    reader = cmd.ExecuteReader();
+                    _connection.Close();
+                    if (localApptsRadio.Checked)
+                    {
+                        InitializeAppointmentLocalDataGrid();
+                    }
+                    else
+                    {
+                        InitializeAppointmentDataGrid();
+                    }
+                }
+            }
+            else
+            {
+                MessageBox.Show("Must select an appointment to delete.");
+            }
         }
 
         private void updateApptButton_Click(object sender, EventArgs e)
@@ -316,27 +349,23 @@ namespace C969_PA_HannahGoodall
 
         private void customerAppointmentsButton_Click(object sender, EventArgs e)
         {
-            string sqlString = $"SELECT customerId, start FROM appointment;";
+            string sqlString = $"SELECT customerId FROM appointment;";
             MySqlCommand cmd = new MySqlCommand(sqlString, _connection);
             MySqlDataAdapter adp = new MySqlDataAdapter(cmd);
             DataTable dt = new DataTable();
             adp.Fill(dt);
 
-            var collection = dt.Rows.Cast<DataRow>().ToList();
-            var dates = collection.Select(r => r["start"].ToString()).ToList();
-
+            var customerIds = dt.Rows.Cast<DataRow>().ToList();
+            var groups = customerIds.GroupBy(row => row["customerId"].ToString()).ToList();
+            int count = 0;
             string report = "";
-            for (int i = 1; i < 13; i++)
+
+            foreach (var grp in groups)
             {
-                int j = 0;
-                var list = collection.Where(row => DateTime.Parse(row["start"].ToString()).Month == i).Select(row => row["customerId"].ToString()).ToList();
-                var count = collection.Where(row => DateTime.Parse(row["start"].ToString()).Month == i).Select(row => row["customerId"].ToString()).Distinct().ToList().Count();
-                while (j < list.Count)
-                {
-                    report += $"CustomerId {list[j]} has {count} appointments in month {i}.\n";
-                    j++;
-                }
+                count = grp.Count();
+                report += $"Customer ID: {grp.Key} has {count} appointment(s).\n";
             }
+
             var form = new GeneratedReportForm(_connection, report);
             form.ShowDialog();
         }

@@ -262,13 +262,13 @@
             this.label6.AutoSize = true;
             this.label6.Location = new System.Drawing.Point(38, 384);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(267, 13);
+            this.label6.Size = new System.Drawing.Size(219, 13);
             this.label6.TabIndex = 21;
-            this.label6.Text = "Number of Appointments For Each Customer By Month:";
+            this.label6.Text = "Number of Appointments For Each Customer:";
             // 
             // customerAppointmentsButton
             // 
-            this.customerAppointmentsButton.Location = new System.Drawing.Point(308, 379);
+            this.customerAppointmentsButton.Location = new System.Drawing.Point(260, 379);
             this.customerAppointmentsButton.Name = "customerAppointmentsButton";
             this.customerAppointmentsButton.Size = new System.Drawing.Size(65, 23);
             this.customerAppointmentsButton.TabIndex = 20;
