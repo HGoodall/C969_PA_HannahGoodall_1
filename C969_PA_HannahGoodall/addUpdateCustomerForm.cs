@@ -116,7 +116,7 @@ namespace C969_PA_HannahGoodall
                             {
                                 _connection.Open();
                             }
-                            string countryInsertSqlString = $"INSERT INTO country (country, createDate, createdBy, lastUpdateBy) VALUES ('{countryTextbox.Text}', '{createDate}', '{_user}', '{_user}');";
+                            string countryInsertSqlString = $"INSERT INTO country (country, createDate, createdBy, lastUpdateBy) VALUES ('{countryTextbox.Text.Trim()}', '{createDate}', '{_user}', '{_user}');";
                             MySqlCommand countryInsertCmd = new MySqlCommand(countryInsertSqlString, _connection);
                             MySqlDataReader reader;
                             reader = countryInsertCmd.ExecuteReader();
@@ -139,7 +139,7 @@ namespace C969_PA_HannahGoodall
                             {
                                 _connection.Open();
                             }
-                            string cityInsertSqlString = $"INSERT INTO city (city, countryId, createDate, createdBy, lastUpdateBy) VALUES ('{cityTextbox.Text}', '{countryId}', '{createDate}', '{_user}', '{_user}');";
+                            string cityInsertSqlString = $"INSERT INTO city (city, countryId, createDate, createdBy, lastUpdateBy) VALUES ('{cityTextbox.Text.Trim()}', '{countryId}', '{createDate}', '{_user}', '{_user}');";
                             MySqlCommand cityInsertCmd = new MySqlCommand(cityInsertSqlString, _connection);
                             MySqlDataReader cityReader;
                             cityReader = cityInsertCmd.ExecuteReader();
@@ -157,7 +157,7 @@ namespace C969_PA_HannahGoodall
                     {
                         _connection.Open();
                     }
-                    string addressInsertSqlString = $"use client_schedule; INSERT INTO address (address, address2, cityId, postalCode, phone, createDate, createdBy, lastUpdateBy) VALUES ('{addressTextbox.Text}', '{string.Empty}', '{cityId}', '{string.Empty}', '{phoneTextbox.Text}', '{createDate}', '{_user}', '{_user}');";
+                    string addressInsertSqlString = $"use client_schedule; INSERT INTO address (address, address2, cityId, postalCode, phone, createDate, createdBy, lastUpdateBy) VALUES ('{addressTextbox.Text.Trim()}', '{string.Empty}', '{cityId}', '{string.Empty}', '{phoneTextbox.Text.Trim()}', '{createDate}', '{_user}', '{_user}');";
                     MySqlCommand addressInsertCmd = new MySqlCommand(addressInsertSqlString, _connection);
                     MySqlDataReader addressReader;
                     addressReader = addressInsertCmd.ExecuteReader();
@@ -169,7 +169,7 @@ namespace C969_PA_HannahGoodall
                     {
                         _connection.Open();
                     }
-                    string customerInsertSqlString = $"use client_schedule; INSERT INTO customer (customerName, addressId, active, createDate, createdBy, lastUpdateBy) VALUES ('{nameTextbox.Text}', '{addressId}', '{1}', '{createDate}', '{_user}', '{_user}');";
+                    string customerInsertSqlString = $"use client_schedule; INSERT INTO customer (customerName, addressId, active, createDate, createdBy, lastUpdateBy) VALUES ('{nameTextbox.Text.Trim()}', '{addressId}', '{1}', '{createDate}', '{_user}', '{_user}');";
                     MySqlCommand customerInsertCmd = new MySqlCommand(customerInsertSqlString, _connection);
                     MySqlDataReader customerReader;
                     customerReader = customerInsertCmd.ExecuteReader();
@@ -177,7 +177,7 @@ namespace C969_PA_HannahGoodall
                 }
                 else
                 {
-                    if (nameTextbox.Text != name)
+                    if (nameTextbox.Text.Trim() != name)
                     {
                         try
                         {
@@ -185,7 +185,7 @@ namespace C969_PA_HannahGoodall
                             {
                                 _connection.Open();
                             }
-                            string updateNameSqlString = $"UPDATE customer SET customerName = '{nameTextbox.Text}' WHERE customerId = {_customerId};";
+                            string updateNameSqlString = $"UPDATE customer SET customerName = '{nameTextbox.Text.Trim()}' WHERE customerId = {_customerId};";
                             MySqlCommand nameUpdateCmd = new MySqlCommand(updateNameSqlString, _connection);
                             MySqlDataReader nameReader;
                             nameReader = nameUpdateCmd.ExecuteReader();
@@ -196,19 +196,19 @@ namespace C969_PA_HannahGoodall
                             throw new Exception(ex.Message, ex);
                         }
                     }
-                    if (addressTextbox.Text != address)
+                    if (addressTextbox.Text.Trim() != address)
                     {
                         if (_connection.State == ConnectionState.Closed)
                         {
                             _connection.Open();
                         }
-                        string updateAddressSqlString = $"UPDATE address SET address = '{addressTextbox.Text}' WHERE addressId = {addressId};";
+                        string updateAddressSqlString = $"UPDATE address SET address = '{addressTextbox.Text.Trim()}' WHERE addressId = {addressId};";
                         MySqlCommand addressUpdateCmd = new MySqlCommand(updateAddressSqlString, _connection);
                         MySqlDataReader addressReader;
                         addressReader = addressUpdateCmd.ExecuteReader();
                         _connection.Close();
                     }
-                    if (cityTextbox.Text != city)
+                    if (cityTextbox.Text.Trim() != city)
                     {
                         try
                         {
@@ -233,7 +233,7 @@ namespace C969_PA_HannahGoodall
                                     _connection.Open();
                                 }
                                 //insert new city and then update address with new cityID
-                                string cityInsertSqlString = $"INSERT INTO city (city, countryId, createDate, createdBy, lastUpdateBy) VALUES ('{cityTextbox.Text}', '{countryId}', '{createDate}', '{_user}', '{_user}');";
+                                string cityInsertSqlString = $"INSERT INTO city (city, countryId, createDate, createdBy, lastUpdateBy) VALUES ('{cityTextbox.Text.Trim()}', '{countryId}', '{createDate}', '{_user}', '{_user}');";
                                 MySqlCommand cityInsertCmd = new MySqlCommand(cityInsertSqlString, _connection);
                                 MySqlDataReader cityReader;
                                 cityReader = cityInsertCmd.ExecuteReader();
@@ -257,7 +257,7 @@ namespace C969_PA_HannahGoodall
                         }
                     }
 
-                    if (countryTextbox.Text != country)
+                    if (countryTextbox.Text.Trim() != country)
                     {
                         try
                         {
@@ -281,7 +281,7 @@ namespace C969_PA_HannahGoodall
                                 {
                                     _connection.Open();
                                 }
-                                string countryInsertSqlString = $"INSERT INTO country (country, createDate, createdBy, lastUpdateBy) VALUES ('{countryTextbox.Text}', '{createDate}', '{_user}', '{_user}');";
+                                string countryInsertSqlString = $"INSERT INTO country (country, createDate, createdBy, lastUpdateBy) VALUES ('{countryTextbox.Text.Trim()}', '{createDate}', '{_user}', '{_user}');";
                                 MySqlCommand countryInsertCmd = new MySqlCommand(countryInsertSqlString, _connection);
                                 MySqlDataReader countryReader;
                                 countryReader = countryInsertCmd.ExecuteReader();
@@ -304,13 +304,13 @@ namespace C969_PA_HannahGoodall
                         }
 
                     }
-                    if (phoneTextbox.Text != phone)
+                    if (phoneTextbox.Text.Trim() != phone)
                     {
                         if (_connection.State == ConnectionState.Closed)
                         {
                             _connection.Open();
                         }
-                        string updatePhoneSqlString = $"UPDATE address SET phone = '{phoneTextbox.Text}' WHERE addressId = {addressId};";
+                        string updatePhoneSqlString = $"UPDATE address SET phone = '{phoneTextbox.Text.Trim()}' WHERE addressId = {addressId};";
                         MySqlCommand phoneUpdateCmd = new MySqlCommand(updatePhoneSqlString, _connection);
                         MySqlDataReader phoneReader;
                         phoneReader = phoneUpdateCmd.ExecuteReader();
@@ -466,7 +466,7 @@ namespace C969_PA_HannahGoodall
 
         private void nameTextbox_TextChanged(object sender, EventArgs e)
         {
-            if (string.IsNullOrEmpty(nameTextbox.Text))
+            if (string.IsNullOrEmpty(nameTextbox.Text.Trim()))
             {
                 nameToolTip.Active = true;
                 nameToolTip.Show("Name is required.", nameTextbox);
@@ -496,7 +496,7 @@ namespace C969_PA_HannahGoodall
 
         private void cityTextbox_TextChanged(object sender, EventArgs e)
         {
-            if (string.IsNullOrEmpty(cityTextbox.Text))
+            if (string.IsNullOrEmpty(cityTextbox.Text.Trim()))
             {
                 cityToolTip.Active = true;
                 cityToolTip.Show("City is required.", cityTextbox);

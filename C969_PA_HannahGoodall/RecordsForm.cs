@@ -38,8 +38,8 @@ namespace C969_PA_HannahGoodall
             {
                 if (dr["userId"].ToString() == _userId)
                 {
-                    var dbTime = DateTime.Parse(dr["start"].ToString()).TimeOfDay;
-                    var timeNow = DateTime.Now.TimeOfDay;
+                    var dbTime = DateTime.Parse(dr["start"].ToString());
+                    var timeNow = DateTime.Now;
                     if (DateTime.Parse(dr["start"].ToString()).Date == DateTime.Now.Date)
                     {
                         var diff = dbTime.Subtract(timeNow);
@@ -63,7 +63,7 @@ namespace C969_PA_HannahGoodall
 
             appointmentDataGrid.DataSource = dt;
         }
-        private void InitializeAppointmentLocalDataGrid()
+        public void InitializeAppointmentLocalDataGrid()
         {
             string sqlString = "SELECT type, customer.customerName, cast(start as date) AS scheduleDate,  CONCAT(cast(start as time), ' - ', cast(end as time)) AS scheduleTime FROM appointment, customer WHERE appointment.customerId = customer.customerId;";
             MySqlCommand cmd = new MySqlCommand(sqlString, _connection);
@@ -79,8 +79,8 @@ namespace C969_PA_HannahGoodall
                 DateTime convertedEndTime = DateTime.SpecifyKind(
                         DateTime.Parse(dr["scheduleTime"].ToString().Split('-')[1]),
                         DateTimeKind.Utc);
-                var startDt = convertedStartTime.ToLocalTime().ToString("hh:mm tt");
-                var endDt = convertedEndTime.ToLocalTime().ToString("hh:mm tt");
+                var startDt = convertedStartTime.ToLocalTime().ToString("hh:mm:ss tt");
+                var endDt = convertedEndTime.ToLocalTime().ToString("hh:mm:ss tt");
                 dr["scheduleTime"] = $"{startDt} - {endDt}";
             }
 
@@ -200,10 +200,11 @@ namespace C969_PA_HannahGoodall
                 for (int i = 0; i < appointmentDataGrid.SelectedRows.Count; i++)
                 {
                     string customerId = GetSelectedCustomerId(true);
-                    string scheduleTime = $"{DateTime.Parse(appointmentDataGrid.SelectedRows[i].Cells[2].Value.ToString()).Date.ToString("yyyy-MM-dd")} {appointmentDataGrid.SelectedRows[i].Cells[3].Value.ToString().Split('-')[0]}";
+                    string scheduledDate = localApptsRadio.Checked ? $"{DateTime.Parse(appointmentDataGrid.SelectedRows[i].Cells[2].Value.ToString()).ToUniversalTime().ToString("yyyy-MM-dd")}" : $"{DateTime.Parse(appointmentDataGrid.SelectedRows[i].Cells[2].Value.ToString()).ToString("yyyy-MM-dd")}";
+                    string scheduleTime = localApptsRadio.Checked ? $"{DateTime.Parse(appointmentDataGrid.SelectedRows[i].Cells[3].Value.ToString().Split('-')[0]).ToUniversalTime().ToString("HH:mm:ss")}" : $"{DateTime.Parse(appointmentDataGrid.SelectedRows[i].Cells[3].Value.ToString().Split('-')[0]).ToString("HH:mm:ss")}";
 
                     //find appointmentID
-                    string sqlString = $"SELECT appointmentId FROM appointment WHERE customerId = '{customerId}' AND start = '{scheduleTime}';";
+                    string sqlString = $"SELECT appointmentId FROM appointment WHERE customerId = '{customerId}' AND start = '{scheduledDate} {scheduleTime}';";
                     MySqlCommand cmd = new MySqlCommand(sqlString, _connection);
                     MySqlDataAdapter adp = new MySqlDataAdapter(cmd);
                     DataTable dt = new DataTable();
@@ -259,7 +260,7 @@ namespace C969_PA_HannahGoodall
             if (appointmentDataGrid.SelectedRows.Count > 0)
             {
                 string appointmentId = GetSelectedAppointmentId();
-                var form = new AddUpdateAppointmentForm(_connection, this, _userId, _user, appointmentId);
+                var form = new AddUpdateAppointmentForm(_connection, this, _userId, _user, localApptsRadio.Checked, appointmentId);
                 form.Text = "Update Appointment";
                 form.ShowDialog();
             }
@@ -271,7 +272,7 @@ namespace C969_PA_HannahGoodall
 
         private void addApptButton_Click(object sender, EventArgs e)
         {
-            var form = new AddUpdateAppointmentForm(_connection, this, _userId, _user);
+            var form = new AddUpdateAppointmentForm(_connection, this, _userId, _user, localApptsRadio.Checked);
             form.Text = "Add Appointment";
             form.ShowDialog();
         }
@@ -369,5 +370,6 @@ namespace C969_PA_HannahGoodall
             var form = new GeneratedReportForm(_connection, report);
             form.ShowDialog();
         }
+
     }
 }

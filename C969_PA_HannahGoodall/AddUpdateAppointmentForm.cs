@@ -18,7 +18,8 @@ namespace C969_PA_HannahGoodall
         private string _username;
         RecordsForm _parent;
         private string _appointmentId;
-        public AddUpdateAppointmentForm(MySqlConnection connection, RecordsForm parent, string userId, string username, string appointmentId = "")
+        private bool _localTime = false;
+        public AddUpdateAppointmentForm(MySqlConnection connection, RecordsForm parent, string userId, string username, bool localTime, string appointmentId = "")
         {
             InitializeComponent();
             _connection = connection;
@@ -26,8 +27,11 @@ namespace C969_PA_HannahGoodall
             _username = username;
             _parent = parent;
             _appointmentId = appointmentId;
+            _localTime = localTime;
+            endTimePicker.Value = _localTime ? endTimePicker.Value.ToLocalTime() : endTimePicker.Value.ToUniversalTime();
             endTimePicker.Format = DateTimePickerFormat.Custom;
             endTimePicker.CustomFormat = "yyyy-MM-dd hh:mm:ss tt";
+            startTimePicker.Value = _localTime ? startTimePicker.Value.ToLocalTime() : startTimePicker.Value.ToUniversalTime();
             startTimePicker.Format = DateTimePickerFormat.Custom;
             startTimePicker.CustomFormat = "yyyy-MM-dd hh:mm:ss tt";
             if (!string.IsNullOrEmpty(_appointmentId))
@@ -55,9 +59,9 @@ namespace C969_PA_HannahGoodall
                     typeTextBox.Text = existingType;
                     existingCustomerId = row["customerId"].ToString();
                     customerIdTextBox.Text = existingCustomerId;
-                    existingStart = DateTime.Parse(row["start"].ToString());
+                    existingStart = _localTime ? DateTime.Parse(row["start"].ToString()).ToLocalTime() : DateTime.Parse(row["start"].ToString());
                     startTimePicker.Value = existingStart;
-                    existingEnd = DateTime.Parse(row["end"].ToString());
+                    existingEnd = _localTime ? DateTime.Parse(row["end"].ToString()).ToLocalTime() : DateTime.Parse(row["end"].ToString());
                     endTimePicker.Value = existingEnd;
                 }
             }
@@ -83,7 +87,11 @@ namespace C969_PA_HannahGoodall
                         {
                             _connection.Open();
                         }
-                        string insertApptSqlString = $"INSERT INTO appointment (customerId, userId, title, description, location, contact, type, url, start, end, createDate, createdBy, lastUpdateBy) VALUES ('{customerIdTextBox.Text}', '{_userId}', '{string.Empty}', '{string.Empty}', '{string.Empty}', '{string.Empty}', '{typeTextBox.Text}', '{string.Empty}', '{startTimePicker.Value.Date.ToString("yyyy-MM-dd")} {startTimePicker.Value.TimeOfDay.ToString()}', '{endTimePicker.Value.Date.ToString("yyyy-MM-dd")} {endTimePicker.Value.TimeOfDay.ToString()}', '{createDate}', '{_username}', '{_username}');";
+                        var startTime = _localTime ? startTimePicker.Value.ToUniversalTime().ToString("HH:mm:ss") : startTimePicker.Value.ToString("HH:mm:ss");
+                        var endTime = _localTime ? endTimePicker.Value.ToUniversalTime().ToString("HH:mm:ss") : endTimePicker.Value.ToString("HH:mm:ss");
+                        var startDate = _localTime ? startTimePicker.Value.ToUniversalTime().ToString("yyyy-MM-dd") : startTimePicker.Value.ToString("yyyy-MM-dd");
+                        var endDate = _localTime ? endTimePicker.Value.ToUniversalTime().ToString("yyyy-MM-dd") : endTimePicker.Value.ToString("yyyy-MM-dd");
+                        string insertApptSqlString = $"INSERT INTO appointment (customerId, userId, title, description, location, contact, type, url, start, end, createDate, createdBy, lastUpdateBy) VALUES ('{customerIdTextBox.Text}', '{_userId}', '{string.Empty}', '{string.Empty}', '{string.Empty}', '{string.Empty}', '{typeTextBox.Text}', '{string.Empty}', '{startDate} {startTime}', '{endDate} {endTime}', '{createDate}', '{_username}', '{_username}');";
                         MySqlCommand insertCmd = new MySqlCommand(insertApptSqlString, _connection);
                         MySqlDataReader reader;
                         reader = insertCmd.ExecuteReader();
@@ -112,22 +120,28 @@ namespace C969_PA_HannahGoodall
                             updateApptSqlString += $"customerId = '{customerIdTextBox.Text}'";
                             changes = true;
                         }
-                        if (startTimePicker.Value != existingStart)
+                        var startTimePickerTransformed = _localTime ? startTimePicker.Value.ToLocalTime() : startTimePicker.Value;
+                        if (startTimePickerTransformed != existingStart)
                         {
                             if (changes)
                             {
                                 updateApptSqlString += ", ";
                             }
-                            updateApptSqlString += $"start = '{startTimePicker.Value.Date.ToString("yyyy-MM-dd")} {startTimePicker.Value.TimeOfDay}'";
+                            var scheduledStartDate = _localTime ? startTimePicker.Value.ToUniversalTime().ToString("yyyy-MM-dd") : startTimePicker.Value.ToString("yyyy-MM-dd");
+                            var scheduledStartTime = _localTime ? startTimePicker.Value.ToUniversalTime().ToString("HH:mm:ss") : startTimePicker.Value.ToString("HH:mm:ss");
+                            updateApptSqlString += $"start = '{scheduledStartDate} {scheduledStartTime}'";
                             changes = true;
                         }
-                        if (endTimePicker.Value != existingEnd)
+                        var endTimePickerTransformed = _localTime ? endTimePicker.Value.ToLocalTime() : endTimePicker.Value;
+                        if (endTimePickerTransformed != existingEnd)
                         {
                             if (changes)
                             {
                                 updateApptSqlString += ", ";
                             }
-                            updateApptSqlString += $"end = '{endTimePicker.Value.Date.ToString("yyyy-MM-dd")} {endTimePicker.Value.TimeOfDay}'";
+                            var scheduledEndDate = _localTime ? endTimePicker.Value.ToUniversalTime().ToString("yyyy-MM-dd") : endTimePicker.Value.ToString("yyyy-MM-dd");
+                            var scheduledEndTime = _localTime ? endTimePicker.Value.ToUniversalTime().ToString("HH:mm:ss") : endTimePicker.Value.ToString("HH:mm:ss");
+                            updateApptSqlString += $"end = '{scheduledEndDate} {scheduledEndTime}'";
                             changes = true;
                         }
                         if (changes)
@@ -139,7 +153,14 @@ namespace C969_PA_HannahGoodall
                             _connection.Close();
                         }
                     }
-                    _parent.InitializeAppointmentDataGrid();
+                    if (_localTime)
+                    {
+                        _parent.InitializeAppointmentLocalDataGrid();
+                    }
+                    else
+                    {
+                        _parent.InitializeAppointmentDataGrid();
+                    }
                     this.Close();
                 }
             }
@@ -204,32 +225,33 @@ namespace C969_PA_HannahGoodall
                         valid = true;
                     }
                 }
-                //9-5 mon-fri appts
-                var startTime = startTimePicker.Value.TimeOfDay;
-                var startDate = startTimePicker.Value.DayOfWeek;
-                var endTime = endTimePicker.Value.TimeOfDay;
-                var endDate = endTimePicker.Value.DayOfWeek;
-                if (startTime.Hours < 9 || startTime.Hours > 17)
+                //9-5 est mon-fri appts
+                var startTime = startTimePicker.Value;
+                var endTime = endTimePicker.Value;
+                TimeZoneInfo easternZone = TimeZoneInfo.FindSystemTimeZoneById("Eastern Standard Time");
+                var easternStartTime = TimeZoneInfo.ConvertTimeFromUtc(startTime.ToUniversalTime(), easternZone);
+                var easternEndTime = TimeZoneInfo.ConvertTimeFromUtc(endTime.ToUniversalTime(), easternZone);
+                if (easternStartTime.Hour < 9 || easternStartTime.Hour > 17 || (easternStartTime.Hour == 17 && easternStartTime.Minute > 1))
                 {
                     valid = false;
-                    MessageBox.Show("Start time must be scheduled from 9AM - 5PM.");
+                    MessageBox.Show("Start time must be scheduled from 9AM - 5PM EST.");
                 }
-                if (startDate == DayOfWeek.Sunday || startDate == DayOfWeek.Saturday)
+                if (easternStartTime.DayOfWeek == DayOfWeek.Sunday || easternStartTime.DayOfWeek == DayOfWeek.Saturday)
                 {
                     valid = false;
                     MessageBox.Show("Start time must be Monday-Friday");
                 }
-                if (endTime.Hours < 9 || endTime.Hours > 17)
+                if (easternEndTime.Hour < 9 || easternEndTime.Hour > 17 || (easternEndTime.Hour == 17 && easternEndTime.Minute > 1))
                 {
                     valid = false;
-                    MessageBox.Show("End time must be scheduled from 9AM - 5PM.");
+                    MessageBox.Show("End time must be scheduled from 9AM - 5PM EST.");
                 }
-                if (endDate == DayOfWeek.Sunday || endDate == DayOfWeek.Saturday)
+                if (easternEndTime.DayOfWeek == DayOfWeek.Sunday || easternEndTime.DayOfWeek == DayOfWeek.Saturday)
                 {
                     valid = false;
                     MessageBox.Show("End time must be Monday-Friday");
                 }
-                if (endTime < startTime)
+                if (easternEndTime < easternStartTime)
                 {
                     valid = false;
                     MessageBox.Show("End time cannot be before start time.");
@@ -252,9 +274,11 @@ namespace C969_PA_HannahGoodall
                         {
                             if (dr["appointmentId"].ToString() != _appointmentId)
                             {
-                                if (endTime <= DateTime.Parse(dr["end"].ToString()).TimeOfDay && endTime >= DateTime.Parse(dr["start"].ToString()).TimeOfDay ||
-                                    startTime <= DateTime.Parse(dr["end"].ToString()).TimeOfDay && startTime >= DateTime.Parse(dr["start"].ToString()).TimeOfDay ||
-                                    DateTime.Parse(dr["end"].ToString()).TimeOfDay <= endTime && DateTime.Parse(dr["end"].ToString()).TimeOfDay >= startTime)
+                                var endTimeOfDay = _localTime ? endTime.ToUniversalTime().TimeOfDay : endTime.TimeOfDay;
+                                var startTimeOfDay = _localTime ? startTime.ToUniversalTime().TimeOfDay : startTime.TimeOfDay;
+                                if (endTimeOfDay <= DateTime.Parse(dr["end"].ToString()).TimeOfDay && endTimeOfDay >= DateTime.Parse(dr["start"].ToString()).TimeOfDay ||
+                                    startTimeOfDay <= DateTime.Parse(dr["end"].ToString()).TimeOfDay && startTimeOfDay >= DateTime.Parse(dr["start"].ToString()).TimeOfDay ||
+                                    DateTime.Parse(dr["end"].ToString()).TimeOfDay <= endTimeOfDay && DateTime.Parse(dr["end"].ToString()).TimeOfDay >= startTimeOfDay)
                                 {
                                     valid = false;
                                     MessageBox.Show("Appointment cannot overlap with an existing appointment.");

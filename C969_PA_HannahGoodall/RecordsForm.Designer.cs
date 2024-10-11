@@ -86,7 +86,7 @@
             this.appointmentDataGrid.ReadOnly = true;
             this.appointmentDataGrid.RowHeadersVisible = false;
             this.appointmentDataGrid.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.appointmentDataGrid.Size = new System.Drawing.Size(445, 248);
+            this.appointmentDataGrid.Size = new System.Drawing.Size(479, 248);
             this.appointmentDataGrid.TabIndex = 2;
             // 
             // label1
