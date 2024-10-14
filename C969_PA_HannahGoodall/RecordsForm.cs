@@ -24,8 +24,16 @@ namespace C969_PA_HannahGoodall
             _loginTime = loginTime;
             UpcomingAppointment();
             InitializeCustomerDataGrid();
-            InitializeAppointmentDataGrid();
-
+            if (localApptsRadio.Checked)
+            {
+                InitializeAppointmentLocalDataGrid();
+            }
+            else
+            {
+                InitializeAppointmentDataGrid();
+            }
+            monthlyApptViewPicker.Format = DateTimePickerFormat.Custom;
+            monthlyApptViewPicker.CustomFormat = "MMMM yyyy";
         }
         private void UpcomingAppointment()
         {
@@ -38,9 +46,9 @@ namespace C969_PA_HannahGoodall
             {
                 if (dr["userId"].ToString() == _userId)
                 {
-                    var dbTime = DateTime.Parse(dr["start"].ToString());
-                    var timeNow = DateTime.Now;
-                    if (DateTime.Parse(dr["start"].ToString()).Date == DateTime.Now.Date)
+                    var dbTime = DateTime.Parse(dr["start"].ToString()).ToLocalTime();
+                    var timeNow = DateTime.Now.ToLocalTime();
+                    if (dbTime.Date == timeNow.Date)
                     {
                         var diff = dbTime.Subtract(timeNow);
                         if (diff.TotalMinutes <= 15)
@@ -62,6 +70,9 @@ namespace C969_PA_HannahGoodall
             adapter.Fill(dt);
 
             appointmentDataGrid.DataSource = dt;
+            DataGridViewColumn column = new DataGridViewColumn();
+            column = appointmentDataGrid.Columns[2];
+            column.Width = 75;
         }
         public void InitializeAppointmentLocalDataGrid()
         {
@@ -85,6 +96,7 @@ namespace C969_PA_HannahGoodall
             }
 
             appointmentDataGrid.DataSource = dt;
+            DataGridViewColumn column = new DataGridViewColumn();
         }
         public void InitializeCustomerDataGrid()
         {
@@ -279,7 +291,8 @@ namespace C969_PA_HannahGoodall
 
         private void ApptByDayPicker_ValueChanged(object sender, EventArgs e)
         {
-            var dailyApptsForm = new DailyApptsForm(_connection, ApptByDayPicker);
+            var dailyApptsForm = new DailyApptsForm(_connection, ApptByDayPicker, false);
+            dailyApptsForm.Text = "Daily Appointments";
             dailyApptsForm.ShowDialog();
         }
 
@@ -371,5 +384,11 @@ namespace C969_PA_HannahGoodall
             form.ShowDialog();
         }
 
+        private void monthlyApptViewPicker_ValueChanged(object sender, EventArgs e)
+        {
+            var dailyApptsForm = new DailyApptsForm(_connection, monthlyApptViewPicker, true);
+            dailyApptsForm.Text = "Monthly Appointments";
+            dailyApptsForm.ShowDialog();
+        }
     }
 }

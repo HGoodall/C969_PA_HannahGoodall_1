@@ -51,6 +51,8 @@
             this.label7 = new System.Windows.Forms.Label();
             this.apptTypeReportButton = new System.Windows.Forms.Button();
             this.userIdScheduleTextBox = new System.Windows.Forms.TextBox();
+            this.label8 = new System.Windows.Forms.Label();
+            this.monthlyApptViewPicker = new System.Windows.Forms.DateTimePicker();
             ((System.ComponentModel.ISupportInitialize)(this.customerDataGrid)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.appointmentDataGrid)).BeginInit();
             this.SuspendLayout();
@@ -78,7 +80,7 @@
             this.appointmentDataGrid.AllowUserToDeleteRows = false;
             this.appointmentDataGrid.AllowUserToResizeColumns = false;
             this.appointmentDataGrid.AllowUserToResizeRows = false;
-            this.appointmentDataGrid.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.appointmentDataGrid.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
             this.appointmentDataGrid.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.DisplayedCells;
             this.appointmentDataGrid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.appointmentDataGrid.Location = new System.Drawing.Point(440, 32);
@@ -86,7 +88,7 @@
             this.appointmentDataGrid.ReadOnly = true;
             this.appointmentDataGrid.RowHeadersVisible = false;
             this.appointmentDataGrid.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.appointmentDataGrid.Size = new System.Drawing.Size(479, 248);
+            this.appointmentDataGrid.Size = new System.Drawing.Size(411, 248);
             this.appointmentDataGrid.TabIndex = 2;
             // 
             // label1
@@ -188,7 +190,7 @@
             // 
             // ApptByDayPicker
             // 
-            this.ApptByDayPicker.Location = new System.Drawing.Point(579, 322);
+            this.ApptByDayPicker.Location = new System.Drawing.Point(589, 322);
             this.ApptByDayPicker.Name = "ApptByDayPicker";
             this.ApptByDayPicker.Size = new System.Drawing.Size(200, 20);
             this.ApptByDayPicker.TabIndex = 13;
@@ -206,12 +208,10 @@
             // utcApptsRadio
             // 
             this.utcApptsRadio.AutoSize = true;
-            this.utcApptsRadio.Checked = true;
-            this.utcApptsRadio.Location = new System.Drawing.Point(440, 359);
+            this.utcApptsRadio.Location = new System.Drawing.Point(440, 382);
             this.utcApptsRadio.Name = "utcApptsRadio";
             this.utcApptsRadio.Size = new System.Drawing.Size(140, 17);
             this.utcApptsRadio.TabIndex = 15;
-            this.utcApptsRadio.TabStop = true;
             this.utcApptsRadio.Text = "UTC Time Appointments";
             this.utcApptsRadio.UseVisualStyleBackColor = true;
             this.utcApptsRadio.CheckedChanged += new System.EventHandler(this.utcApptsRadio_CheckedChanged);
@@ -219,10 +219,12 @@
             // localApptsRadio
             // 
             this.localApptsRadio.AutoSize = true;
-            this.localApptsRadio.Location = new System.Drawing.Point(586, 359);
+            this.localApptsRadio.Checked = true;
+            this.localApptsRadio.Location = new System.Drawing.Point(586, 382);
             this.localApptsRadio.Name = "localApptsRadio";
             this.localApptsRadio.Size = new System.Drawing.Size(144, 17);
             this.localApptsRadio.TabIndex = 16;
+            this.localApptsRadio.TabStop = true;
             this.localApptsRadio.Text = "Local Time Appointments";
             this.localApptsRadio.UseVisualStyleBackColor = true;
             this.localApptsRadio.CheckedChanged += new System.EventHandler(this.localApptsRadio_CheckedChanged);
@@ -302,11 +304,30 @@
             this.userIdScheduleTextBox.Size = new System.Drawing.Size(72, 20);
             this.userIdScheduleTextBox.TabIndex = 24;
             // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(437, 357);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(148, 13);
+            this.label8.TabIndex = 26;
+            this.label8.Text = "View Appointments By Month:";
+            // 
+            // monthlyApptViewPicker
+            // 
+            this.monthlyApptViewPicker.Location = new System.Drawing.Point(589, 354);
+            this.monthlyApptViewPicker.Name = "monthlyApptViewPicker";
+            this.monthlyApptViewPicker.Size = new System.Drawing.Size(200, 20);
+            this.monthlyApptViewPicker.TabIndex = 25;
+            this.monthlyApptViewPicker.ValueChanged += new System.EventHandler(this.monthlyApptViewPicker_ValueChanged);
+            // 
             // RecordsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(931, 408);
+            this.Controls.Add(this.label8);
+            this.Controls.Add(this.monthlyApptViewPicker);
             this.Controls.Add(this.userIdScheduleTextBox);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.apptTypeReportButton);
@@ -364,5 +385,7 @@
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Button apptTypeReportButton;
         private System.Windows.Forms.TextBox userIdScheduleTextBox;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.DateTimePicker monthlyApptViewPicker;
     }
 }
